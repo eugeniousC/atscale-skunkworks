@@ -21,7 +21,7 @@
 /* ============================================================
  * CONFIG — Eugene swaps APPS_SCRIPT_URL after deploying Code.gs
  * ============================================================ */
-const APPS_SCRIPT_URL = "REPLACE_ME_AFTER_DEPLOY"; // wakeup checklist step 5
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyHWscaOofFPlkEW7VygvD0rFeLkHvAeOGKWYgZaHdQvsL5zmJ34CWD-nyMhCRMX-LU/exec"; // wired 2026-06-02
 const STRATEGY_DISCOVERY_URL = "https://calendly.com/eugene-atscale-advisors/strategy-discovery";
 const FOUNDATION_CHECKIN_URL = "https://calendly.com/eugene-atscale-advisors/foundation-checkin-atscale-advisors";
 const FRICTION_SESSION_URL = "https://calendly.com/eugene-atscale-advisors/friction-diagnostic-session";
