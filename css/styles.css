@@ -24,6 +24,15 @@ a { color: inherit; }
   --leak-rust:     #A8412A;
   --steel-teal:    #2E6E6A;
 
+  /* Cyanotype palette — deep blue with white technical lines */
+  --blueprint-deep:        #0E3A6B;
+  --blueprint-deeper:      #0A2D55;
+  --blueprint-text:        #E8EEF7;
+  --blueprint-text-muted:  rgba(232, 238, 247, 0.72);
+  --blueprint-grid:        rgba(255, 255, 255, 0.10);
+  --blueprint-grid-bright: rgba(255, 255, 255, 0.28);
+  --leak-rust-bright:      #E89255;
+
   --font-display: 'Space Grotesk', 'IBM Plex Sans', system-ui, sans-serif;
   --font-body:    'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:    'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
@@ -99,14 +108,87 @@ section { padding: var(--gap-lg) 0; }
 section.alt { background: var(--paper); }
 section.dark { background: var(--ink); color: var(--paper); }
 section.dark h1, section.dark h2, section.dark h3 { color: var(--paper); }
+section.dark a:not(.btn) { color: var(--blueprint-line); border-bottom: 1px solid var(--bronze); }
+section.dark a:not(.btn):hover { color: #FFFFFF; }
+
+/* Cyanotype section variant — for marquee/CTA bands */
+section.blueprint {
+  background-color: var(--blueprint-deep);
+  background-image:
+    linear-gradient(var(--blueprint-grid-bright) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid-bright) 1px, transparent 1px),
+    linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
+  background-size: 96px 96px, 96px 96px, 32px 32px, 32px 32px;
+  color: var(--blueprint-text);
+  border-top: 1px solid var(--blueprint-grid-bright);
+  border-bottom: 1px solid var(--blueprint-grid-bright);
+}
+section.blueprint h2, section.blueprint h3 { color: #FFFFFF; }
+section.blueprint p, section.blueprint li { color: var(--blueprint-text); }
+section.blueprint strong { color: #FFFFFF; }
+section.blueprint em { color: var(--blueprint-text); }
+section.blueprint .muted { color: var(--blueprint-text-muted); }
+section.blueprint .figure { color: var(--leak-rust-bright); }
+section.blueprint a:not(.btn) {
+  color: var(--blueprint-text);
+  border-bottom: 1px solid var(--bronze);
+}
+section.blueprint a:not(.btn):hover { color: #FFFFFF; }
+section.blueprint blockquote { border-left-color: var(--bronze); color: var(--blueprint-text); }
+section.blueprint .pain-list li::before { color: var(--bronze); }
+section.blueprint .btn-secondary { color: #FFFFFF; border-color: #FFFFFF; }
+section.blueprint .btn-secondary:hover { background: var(--blueprint-text); color: var(--blueprint-deep); }
+/* Bronze button gets a soft glow on blueprint */
+section.blueprint .btn,
+.hero .btn {
+  box-shadow: 0 4px 18px rgba(176, 118, 47, 0.35);
+}
+
+/* Wall-callout on blueprint backgrounds needs higher-contrast treatment */
+.diag-wall-callout {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Diagnostic results card stays paper-light for legibility against blueprint shell */
+.diag-card, .diag-result {
+  position: relative;
+}
+.diag-card::before, .diag-result::before,
+.diag-card::after, .diag-result::after {
+  /* draftsman corner ticks on each diag panel */
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--bronze);
+  pointer-events: none;
+}
+.diag-card::before, .diag-result::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.diag-card::after, .diag-result::after { top: -1px; right: -1px; border-left: 0; border-bottom: 0; }
 
 /* ---------- Header / nav ---------- */
 .site-header {
-  border-bottom: 1px solid var(--blueprint-line);
-  background: var(--surface);
+  border-bottom: 1px solid var(--ink);
+  background: var(--ink);
   position: sticky;
   top: 0;
   z-index: 50;
+  color: var(--paper);
+}
+.site-header .brand { color: var(--paper); }
+.site-header .brand .brand-mark { color: var(--bronze); }
+.site-header .nav a { color: var(--paper); }
+.site-header .nav a:hover { color: #FFFFFF; border-bottom-color: var(--bronze); }
+.site-header .nav a[aria-current="page"] { color: #FFFFFF; border-bottom-color: var(--bronze); }
+.site-header .nav-toggle {
+  color: var(--paper);
+  background: transparent;
+  border-color: var(--blueprint-line);
+}
+@media (max-width: 860px) {
+  .site-header .nav { background: var(--ink); border-bottom-color: var(--bronze); }
+  .site-header .nav a { border-bottom-color: rgba(255,255,255,0.1); }
 }
 .site-header .container {
   display: flex;
@@ -187,24 +269,54 @@ section.dark h1, section.dark h2, section.dark h3 { color: var(--paper); }
   .nav-cta { margin-top: var(--gap-sm); text-align: center; }
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Hero — cyanotype ---------- */
 .hero {
   padding: var(--gap-xl) 0 var(--gap-lg);
-  background-color: var(--paper);
+  background-color: var(--blueprint-deep);
   background-image:
-    linear-gradient(var(--blueprint-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--blueprint-line) 1px, transparent 1px);
-  background-size: 32px 32px;
-  border-bottom: 1px solid var(--blueprint-line);
+    /* major grid every 96px (dimension marks) */
+    linear-gradient(var(--blueprint-grid-bright) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid-bright) 1px, transparent 1px),
+    /* minor grid every 32px */
+    linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
+  background-size: 96px 96px, 96px 96px, 32px 32px, 32px 32px;
+  border-bottom: 1px solid var(--blueprint-grid-bright);
+  color: var(--blueprint-text);
+  position: relative;
+  overflow: hidden;
 }
+.hero::before, .hero::after {
+  /* corner draftsman's ticks */
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--bronze);
+  pointer-events: none;
+}
+.hero::before { top: 16px; left: 16px; border-right: 0; border-bottom: 0; }
+.hero::after  { top: 16px; right: 16px; border-left: 0; border-bottom: 0; }
+.hero h1, .hero h2, .hero h3 { color: var(--blueprint-text); }
 .hero h1 { max-width: 18ch; }
+.hero p { color: var(--blueprint-text); }
 .hero .lede {
   font-size: 1.2rem;
-  color: var(--body);
+  color: var(--blueprint-text);
   max-width: 56ch;
   margin-bottom: var(--gap-md);
 }
-.hero .lede strong { color: var(--ink); }
+.hero .lede strong { color: #FFFFFF; }
+.hero .muted { color: var(--blueprint-text-muted); }
+.hero a:not(.btn):not(.nav-cta) {
+  color: var(--blueprint-text);
+  border-bottom: 1px solid var(--bronze);
+}
+.hero a:not(.btn):not(.nav-cta):hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
+.hero .btn-text { color: var(--blueprint-text); border-bottom-color: var(--bronze); }
+.hero .btn-text:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
+.hero .figure { color: var(--leak-rust-bright); }
+.hero strong { color: #FFFFFF; }
 
 /* ---------- Blueprint background utility ---------- */
 .blueprint-bg {
@@ -396,8 +508,18 @@ th {
 /* ---------- Diagnostic form ---------- */
 .diagnostic-shell {
   min-height: calc(100vh - 200px);
-  background: var(--paper);
+  background-color: var(--blueprint-deep);
+  background-image:
+    linear-gradient(var(--blueprint-grid-bright) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid-bright) 1px, transparent 1px),
+    linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
+  background-size: 96px 96px, 96px 96px, 32px 32px, 32px 32px;
 }
+.diagnostic-shell .diag-progress { color: var(--blueprint-text-muted); }
+.diagnostic-shell .diag-progress-bar { background: var(--blueprint-grid-bright); }
+.diagnostic-shell .muted { color: var(--blueprint-text-muted); }
+.diagnostic-shell > .diagnostic-wrap > p.muted { color: var(--blueprint-text-muted); }
 .diagnostic-wrap {
   max-width: var(--max-w-narrow);
   margin: 0 auto;
