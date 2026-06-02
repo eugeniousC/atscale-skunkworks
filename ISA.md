@@ -165,7 +165,7 @@ Ship a deployable static `/home/ecoleman/Projects/website/` repository tonight t
 - [ ] ISC-75: Foundation First™ 3-stage model
 - [ ] ISC-76: Revenue Intelligence Maturity Curve™ 5-stage table with leakage rates
 - [ ] ISC-77: Scale Readiness Curve™ 40-point table
-- [ ] ISC-78: Operations → Intelligence → Automation sequencing rule
+- [ ] ISC-78: Operations → Replication → Intelligence → Automation sequencing rule (Wall sits between Replication and Intelligence)
 - [ ] ISC-79: "How they connect" tie-back paragraph
 - [ ] ISC-80: replicationWall.png image rendered inline (with alt text)
 
