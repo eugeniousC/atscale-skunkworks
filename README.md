@@ -15,16 +15,17 @@ website/
 ├── insights.html           Publication archive + cadence
 ├── contact.html            Intent-routed (prospect / press / peer)
 ├── diagnostic.html         Assessment shell (JS-rendered)
+├── 404.html                Branded not-found page
 │
 ├── css/styles.css          Architect's Blueprint design system
 ├── js/diagnostic.js        Questions, scoring, results, POST to backend
+├── js/nav.js               Mobile menu toggle (CSP-safe, replaces inline onclick)
 ├── assets/replicationWall.png
 │
 ├── apps-script/
 │   ├── Code.gs             Google Apps Script backend
 │   └── README.md           Backend deploy walkthrough
 │
-├── _redirects              Cloudflare Pages clean URLs (/about → /about.html)
 ├── _headers                Security headers (CSP, X-Frame, Permissions-Policy)
 ├── .gitignore
 ├── ISA.md                  Thomas's full project spec (12 sections, 142 criteria)
