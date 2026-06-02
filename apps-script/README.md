@@ -76,11 +76,13 @@ atScale diagnostic backend OK — 2026-06-02T13:14:15Z
 If you see that, the doGet handler works. Now run a POST test — open a terminal and run:
 
 ```bash
-curl -L -X POST \
+curl -sL \
   -H "Content-Type: text/plain;charset=utf-8" \
-  -d '{"submitted_at":"2026-06-02T00:00:00Z","p1_first_name":"TEST","p2_last_name":"USER","p3_email":"test@example.com","p4_company":"SmokeCo","p5_revenue_band":"$5M – $10M","p6_industry":"Professional services","p7_role":"Founder / CEO / Owner","q1":2,"q2":2,"q3":2,"q4":2,"q5":2,"q6":2,"q7":2,"q8":2,"q9":2,"q10":2,"q11":2,"q12":2,"dim_revenue":6,"dim_delivery":6,"dim_systems":6,"dim_leadership":6,"total_score":24,"stage_n":2,"stage_name":"Dashboard Theater","primary_leak":"Revenue Engine","cost_low":840000,"cost_high":1260000,"user_agent":"smoke-test"}' \
+  --data '{"submitted_at":"2026-06-02T00:00:00Z","p1_first_name":"TEST","p2_last_name":"USER","p3_email":"test@example.com","p4_company":"SmokeCo","p5_revenue_band":"$5M – $10M","p6_industry":"Professional services","p7_role":"Founder / CEO / Owner","q1":2,"q2":2,"q3":2,"q4":2,"q5":2,"q6":2,"q7":2,"q8":2,"q9":2,"q10":2,"q11":2,"q12":2,"dim_revenue":6,"dim_delivery":6,"dim_systems":6,"dim_leadership":6,"total_score":24,"src_score":22,"src_tier":"The Plateau","stage_n":2,"stage_name":"Dashboard Theater","primary_leak":"Revenue Engine","cost_low":840000,"cost_high":1260000,"user_agent":"smoke-test"}' \
   "PASTE_YOUR_WEB_APP_URL_HERE"
 ```
+
+> ⚠️ **Do NOT add `-X POST` here.** Apps Script answers a POST with a 302 redirect to a `script.googleusercontent.com/echo` URL that serves the JSON response over a **GET**. `--data` already makes the first request a POST; plain `-L` then does the correct POST→GET downgrade on the redirect. Adding `-X POST` (or `--post302`) forces the followed request to stay POST, which hits the echo URL with the wrong method and returns a Google Drive *"unable to open the file"* HTML page instead of `{"ok":true}`. A green result looks like: `{"ok":true,"mail_ok":true}`.
 
 Then:
 - check your Sheet — there should be a row with TEST/USER/SmokeCo
@@ -90,7 +92,9 @@ Then:
 ### 7. If something is wrong
 
 - **No email arrives.** Most common cause: notify address is wrong or the script auth was skipped. Re-deploy from step 4 and re-authorize.
-- **POST returns HTML instead of JSON.** Most common cause: the Web App is deployed as "Only myself" instead of "Anyone". Redeploy.
+- **POST returns HTML instead of JSON.** Two causes, in order of likelihood:
+  1. **`curl -X POST` with `-L`** — you got the Google Drive *"unable to open the file"* page. This is the redirect-method trap above; drop `-X POST`. (The browser `fetch()` in `js/diagnostic.js` is unaffected — it follows the 302 natively.)
+  2. The Web App is deployed as "Only myself" instead of "Anyone". If the *GET* health check also fails (redirects to a Google login), it's this — redeploy with "Who has access: Anyone".
 - **CORS errors in browser console.** The client uses `Content-Type: text/plain` to dodge CORS preflight. If you see a preflight error, the client must NOT be sending `application/json` — check `js/diagnostic.js` line ~submit().
 - **Submissions land but no email.** Check Apps Script logs: editor → "Executions" tab → look for red rows.
 
