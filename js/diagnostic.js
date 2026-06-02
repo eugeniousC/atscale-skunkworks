@@ -292,6 +292,37 @@ function stageFor(total) {
   return STAGES.find(s => total >= s.band[0] && total <= s.band[1]) || STAGES[0];
 }
 
+/* ============================================================
+ * Scale Readiness Score™ — the 40-point view
+ *
+ * The diagnostic produces a 12–48 raw total. We project that onto the 10–40
+ * Scale Readiness Score scale (the framework on the Frameworks page).
+ *
+ * Linear projection: srcScore = round(((total - 12) / 36) * 30 + 10)
+ *   total=12 → 10 (Grind floor)
+ *   total=24 → 20 (Plateau start)
+ *   total=36 → 30 (Inflection)
+ *   total=48 → 40 (Machine ceiling)
+ * ============================================================ */
+const SRC_TIERS = [
+  { band: [10, 19], name: "The Grind",      need: "Foundation work first",
+    interp: "The business runs on heroics and the founder's bandwidth. The first work is foundation, not growth." },
+  { band: [20, 27], name: "The Plateau",    need: "Operational architecture",
+    interp: "You have systems and dashboards, but the team can't predict outcomes from them. Most $3M-$30M owner-operators stall here — and most never get out without rebuilding the operational architecture." },
+  { band: [28, 34], name: "The Inflection", need: "Growth architecture overlay",
+    interp: "Foundation is honest. The next altitude is building the systems that compound — forecast discipline, decision rights, the architecture that lets the business run without you in every room." },
+  { band: [35, 40], name: "The Machine",    need: "Strategic counsel",
+    interp: "You're operating ahead of the curve. The remaining work is strategic — the rare exceptions the Phase 2 system isn't built to handle." },
+];
+
+function srcScore(total) {
+  if (typeof total !== "number" || total < 12 || total > 48) return 10;
+  return Math.round(((total - 12) / 36) * 30 + 10);
+}
+function srcTier(score) {
+  return SRC_TIERS.find(t => score >= t.band[0] && score <= t.band[1]) || SRC_TIERS[0];
+}
+
 // Reject non-https/mailto URLs to defang any future XSS via a stage CTA that gets parameterized.
 function safeUrl(url) {
   if (typeof url !== "string") return "#";
@@ -540,7 +571,11 @@ function computeScore() {
   const low = Math.round(central * 0.8 / 1000) * 1000;
   const high = Math.round(central * 1.2 / 1000) * 1000;
 
-  return { total, dims, primary, stage, costLow: low, costHigh: high, revenueBandLabel: a.p5 };
+  // Scale Readiness Score™ — the headline, branded view
+  const src = srcScore(total);
+  const tier = srcTier(src);
+
+  return { total, dims, primary, stage, costLow: low, costHigh: high, revenueBandLabel: a.p5, src, tier };
 }
 
 function fmtMoney(n) {
@@ -571,29 +606,39 @@ function renderResults() {
 
   return `
     <div class="diag-result">
-      <p class="muted" style="font-family: var(--font-mono); font-size: 0.85rem; margin:0;">Stage ${r.stage.n} of 5 &middot; Revenue Intelligence Maturity Curve&trade;</p>
-      <h2 class="diag-stage-name">${escape(r.stage.name)}</h2>
-      <p class="diag-stage-tag">&ldquo;${escape(r.stage.tag)}&rdquo;</p>
 
-      <p class="muted" style="margin: var(--gap-md) 0 0;">Your score</p>
-      <p class="diag-score">${r.total}<small>/48</small></p>
+      <!-- HEADLINE: Scale Readiness Score™ — the personal, possessive number -->
+      <div class="diag-headline">
+        <p class="muted" style="font-family: var(--font-mono); font-size: 0.85rem; margin:0; letter-spacing: 0.06em;">YOUR SCALE READINESS SCORE&trade;</p>
+        <p class="diag-score-big"><span class="diag-score-num">${r.src}</span><small> / 40</small></p>
+        <p class="diag-tier-name">${escape(r.tier.name)}</p>
+        <p class="diag-tier-need"><span class="diag-tier-need-label">What&rsquo;s needed:</span> ${escape(r.tier.need)}</p>
+      </div>
 
-      <p class="muted" style="margin: var(--gap-sm) 0 0;">Estimated annual cost of the Wall</p>
-      <p class="diag-cost">${fmtMoney(r.costLow)} – ${fmtMoney(r.costHigh)}</p>
-      <p class="muted" style="font-size: 0.85rem;">Based on Stage ${r.stage.n} (${escape(r.stage.name)}) leakage applied to your stated revenue band (${escape(r.revenueBandLabel || "—")}).</p>
+      <p class="diag-tier-interp">${escape(r.tier.interp)}</p>
+
+      <!-- SECONDARY: RI Maturity Curve stage + cost of the Wall -->
+      <div class="diag-secondary">
+        <p class="muted" style="font-family: var(--font-mono); font-size: 0.8rem; margin:0; letter-spacing: 0.06em;">REVENUE INTELLIGENCE MATURITY CURVE&trade;</p>
+        <p class="diag-stage-line">Stage ${r.stage.n} of 5 &mdash; <strong>${escape(r.stage.name)}</strong></p>
+        <p class="diag-stage-tag">&ldquo;${escape(r.stage.tag)}&rdquo;</p>
+        <p class="muted" style="margin: var(--gap-sm) 0 0;">Estimated annual cost of the Wall</p>
+        <p class="diag-cost">${fmtMoney(r.costLow)} – ${fmtMoney(r.costHigh)}</p>
+        <p class="muted" style="font-size: 0.85rem;">Based on Stage ${r.stage.n} leakage applied to your revenue band (${escape(r.revenueBandLabel || "—")}).</p>
+      </div>
 
       ${wallCallout}
 
       <h3>Where it's leaking</h3>
       <div class="diag-bars">${bars}</div>
 
-      <p>${escape(r.stage.interp)}</p>
+      <p class="muted" style="font-size: 0.85rem;">${escape(r.stage.interp)}</p>
 
       ${r.stage.n <= 2 ? `<img class="diag-wall-img" src="/assets/replicationWall.png" alt="The Replication Wall — a structural barrier between hustle-led growth and systems-led scale.">` : ""}
 
       <div class="diag-cta-block">
         <h3>Where to go next</h3>
-        <p><strong>Start with a Strategy Discovery call.</strong> 30 minutes, free. No commitment, no pitch. We talk through your results, you decide whether the next step makes sense.</p>
+        <p><strong>Start with a Strategy Discovery call.</strong> 30 minutes, free. No commitment, no pitch. We talk through your score, you decide whether the next step makes sense.</p>
         <p><a class="btn" href="${escape(safeUrl(STRATEGY_DISCOVERY_URL))}" target="_blank" rel="noopener noreferrer">Book a Strategy Discovery call &rarr;</a></p>
         ${r.stage.cta.url !== STRATEGY_DISCOVERY_URL ? `
         <hr style="border-top: 1px solid var(--blueprint-line); margin: var(--gap-md) 0;">
@@ -724,6 +769,8 @@ async function submit() {
     q7: state.answers.q7, q8: state.answers.q8, q9: state.answers.q9,
     q10: state.answers.q10, q11: state.answers.q11, q12: state.answers.q12,
     total_score: r.total,
+    src_score: r.src,
+    src_tier: r.tier.name,
     dim_revenue: r.dims[0].score,
     dim_delivery: r.dims[1].score,
     dim_systems: r.dims[2].score,

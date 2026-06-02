@@ -30,6 +30,7 @@ const COLUMNS = [
   "q1","q2","q3","q4","q5","q6","q7","q8","q9","q10","q11","q12",
   "dim_revenue","dim_delivery","dim_systems","dim_leadership",
   "total_score",
+  "src_score","src_tier",
   "stage_n","stage_name",
   "primary_leak",
   "cost_low","cost_high",
@@ -108,7 +109,7 @@ function ensureSheet_() {
 }
 
 function sendNotificationEmail_(p) {
-  const subject = `[Diagnostic] ${p.p4_company || "(unknown company)"} — ${p.p5_revenue_band || "?"} — Stage ${p.stage_n || "?"} (${p.stage_name || ""})`;
+  const subject = `[Diagnostic] ${p.p4_company || "(unknown company)"} — ${p.p5_revenue_band || "?"} — SRC ${p.src_score || "?"} (${p.src_tier || ""}) / Stage ${p.stage_n || "?"}`;
   const bodyLines = [
     `New Growth Friction Diagnostic submission`,
     ``,
@@ -119,10 +120,11 @@ function sendNotificationEmail_(p) {
     `Industry:  ${p.p6_industry || ""}`,
     `Role:      ${p.p7_role || ""}`,
     ``,
-    `Total:     ${p.total_score || "?"} / 48`,
-    `Stage:     ${p.stage_n || "?"} — ${p.stage_name || ""}`,
-    `Primary leak: ${p.primary_leak || ""}`,
-    `Cost of the Wall: $${(p.cost_low || 0).toLocaleString()} – $${(p.cost_high || 0).toLocaleString()} / year`,
+    `Scale Readiness Score: ${p.src_score || "?"} / 40 — ${p.src_tier || ""}`,
+    `RI Curve Stage:        ${p.stage_n || "?"} — ${p.stage_name || ""}`,
+    `Raw total:             ${p.total_score || "?"} / 48`,
+    `Primary leak:          ${p.primary_leak || ""}`,
+    `Cost of the Wall:      $${(p.cost_low || 0).toLocaleString()} – $${(p.cost_high || 0).toLocaleString()} / year`,
     ``,
     `Dimensions:`,
     `  Revenue Engine:            ${p.dim_revenue || "?"} / 12`,

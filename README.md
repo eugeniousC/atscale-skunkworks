@@ -86,9 +86,13 @@ Fonts: Space Grotesk (headings, brand), Inter (body), IBM Plex Mono (figures, sc
 | Question score | 1–4 each (option index) |
 | Total | sum of Q1–Q12, range 12–48 |
 | Dimension subscore | sum of 3 questions, range 3–12 |
-| Stage band | 12–17 → 1, 18–28 → 2, 29–39 → 3, 40–45 → 4, 46–48 → 5 |
+| **Scale Readiness Score™ (headline)** | `round(((total - 12) / 36) * 30 + 10)` — projects 12–48 onto 10–40 |
+| **Scale Readiness Tier** | 10–19 Grind · 20–27 Plateau · 28–34 Inflection · 35–40 Machine |
+| RI Maturity Curve stage band | 12–17 → 1, 18–28 → 2, 29–39 → 3, 40–45 → 4, 46–48 → 5 |
 | Cost low/high | revenue-band midpoint × stage leakage midpoint, ± 20% |
-| Primary leak zone | lowest-scoring dimension (ties broken in Revenue / Delivery / Systems / Leadership order) |
+| Primary leak zone | lowest-scoring dimension (ties broken Delivery → Systems → Leadership → Revenue) |
+
+The diagnostic produces two simultaneous views of the same business: the **Scale Readiness Score (10–40)** is the headline / shareable number, and the **RI Maturity Curve stage (1–5)** is the diagnostic detail that drives the cost-of-the-Wall calculation. Both are branded IP, both appear on the results page, and both land in the Sheet.
 
 **Industry-conditional wording:**
 

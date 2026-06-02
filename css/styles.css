@@ -615,14 +615,97 @@ th {
   border-radius: var(--radius-lg);
   padding: var(--gap-lg) var(--gap-md);
 }
+
+/* HEADLINE — Scale Readiness Score™ */
+.diag-headline {
+  background: var(--blueprint-deep);
+  background-image:
+    linear-gradient(var(--blueprint-grid-bright) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid-bright) 1px, transparent 1px),
+    linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
+  background-size: 96px 96px, 96px 96px, 32px 32px, 32px 32px;
+  color: var(--blueprint-text);
+  text-align: center;
+  padding: var(--gap-lg) var(--gap-md);
+  margin: 0 0 var(--gap-md);
+  border-radius: var(--radius);
+  border: 1px solid var(--bronze);
+  position: relative;
+}
+.diag-headline::before, .diag-headline::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--bronze);
+  pointer-events: none;
+}
+.diag-headline::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+.diag-headline::after  { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+.diag-score-big {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 4.2rem;
+  line-height: 1;
+  margin: var(--gap-sm) 0;
+  color: var(--blueprint-text);
+}
+.diag-score-num { color: #FFFFFF; }
+.diag-score-big small {
+  font-size: 1.5rem;
+  color: var(--blueprint-text-muted);
+}
+.diag-tier-name {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0 0 var(--gap-xs);
+  letter-spacing: -0.01em;
+}
+.diag-tier-need {
+  font-family: var(--font-body);
+  color: var(--blueprint-text);
+  margin: 0;
+  font-size: 0.95rem;
+}
+.diag-tier-need-label {
+  color: var(--blueprint-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.diag-tier-interp {
+  color: var(--body);
+  margin: 0 0 var(--gap-lg);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+/* SECONDARY — RI Maturity Curve stage + cost */
+.diag-secondary {
+  background: var(--paper);
+  border-left: 3px solid var(--ink);
+  padding: var(--gap-md);
+  margin: 0 0 var(--gap-md);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.diag-stage-line {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--ink);
+  margin: 4px 0 4px;
+}
 .diag-stage-name {
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   color: var(--ink);
   margin: 0 0 8px;
   font-weight: 600;
 }
-.diag-stage-tag { font-style: italic; color: var(--slate); margin-bottom: var(--gap-md); }
+.diag-stage-tag { font-style: italic; color: var(--slate); margin-bottom: var(--gap-sm); }
 .diag-score {
   font-family: var(--font-mono);
   font-size: 2.2rem;
