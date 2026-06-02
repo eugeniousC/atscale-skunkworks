@@ -2,12 +2,13 @@
 project: atscale-advisors-website
 slug: atscale-website-v1
 effort: E4
-phase: build
-progress: 0/142
+phase: execute
+progress: deploy-live | backend-pending
 mode: build
 started: 2026-06-02T05:48:00Z
-updated: 2026-06-02T05:50:38Z
-iteration: 1
+updated: 2026-06-02T22:30:00Z
+iteration: 8
+session_state: /home/ecoleman/Projects/website/RESUME_HERE.md
 ---
 
 # atScale Advisors Website — ISA
