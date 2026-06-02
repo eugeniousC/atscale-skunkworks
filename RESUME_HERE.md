@@ -2,99 +2,82 @@
 
 **Last updated:** 2026-06-02
 **Last working session:** Linux Thomas at u.eugenius.tech
-**State:** mid-deploy, content polish in progress, backend not yet wired
+**State:** live on preview, charcoal-placard redesign shipped, ICP copy standardized, backend still not wired
 
 ---
 
 ## Where we are
 
-The site is **live on Cloudflare Pages** at:
-- Pages URL: https://atscale-website.eugene-ed1.workers.dev
+Live on Cloudflare (Workers static assets) at:
+- Preview URL: https://atscale-website.eugene-ed1.workers.dev
 - Domain target (not yet cut over): atscale-advisors.com (still on Squarespace until ~2026-06-15)
 
 GitHub repo: https://github.com/eugeniousC/atscale-website (private)
 Branch: `main`
-Latest commit: `f8a8548` — feat(frameworks): restructure around the journey as the spine
+Latest commit: `161e7cb` — chore(diagnostic): align tie-break comment to $3M-$30M
+
+> **Infra note:** this is Cloudflare **Workers static assets**, NOT Pages — there is **no `pages.dev`**. Custom-domain hookup at Step 6 runs through the Workers route, not a Pages CNAME. (Corrects the stale Option-A instruction in older notes.)
 
 ## What's done
 
-- [x] **Step 0** — repo scaffolded (20+ tracked files at `/home/ecoleman/Projects/website/`)
-- [x] **Step 1** — local preview SKIPPED (headless VPS; we used Cloudflare preview directly)
-- [x] **Step 2** — GitHub repo created on `eugeniousC`, VPS SSH key added, pushed `main`
-- [x] **Step 3** — Cloudflare Pages connected to repo, auto-deploys on push
-- [x] **Post-deploy fixes:**
-  - Deleted `_redirects` (was causing 307 loop with CF's native `.html` stripping)
-  - Removed `Vistage/EOS/Chair` coexistence section from homepage (kept on About + Services + Frameworks)
-- [x] **Content evolutions during deploy:**
-  - Broadened ICP framing: $3M-$15M trades → $3M-$30M book of business across professional services or trades
-  - Renamed "The Scale Readiness Curve" → "Your Scale Readiness Score™" with full hook + diagnostic CTA
-  - Diagnostic now outputs Scale Readiness Score (10-40) as the headline, RI Maturity Curve stage as secondary
-  - Sequencing framework: Operations → Replication → Intelligence → Automation (was 3-phase; Replication is now where the Wall sits)
-  - Cyanotype design pass: deep Prussian blue hero/marquee bands, bronze CTA glow, mono SECTION-N labels
-  - **Frameworks page restructured** around the journey-as-spine — leads with ORIA, then Wall, then diagnostic, then maps
-- [x] **Backend code complete** in `apps-script/Code.gs` — Sheet append + email notify + dual-score (SRC + Stage) — NOT yet deployed
-- [x] Code-reviewed by Forge (Critical + High issues fixed)
+- [x] Site scaffolded, on GitHub, auto-deploys to Cloudflare on push to `main`
+- [x] **Design v2 — charcoal placard pass (commit `c35bb22`)**: killed the cyanotype blueprint grid, marquee bands, and draftsman corner-ticks; inverted to dark charcoal (`#0F1318` base, `#171C24` placards), near-white headings, cool-gray body; depth now from elevation + hairline borders + soft shadows; single bronze hero glow; bronze retained and brightened (`#C8893B`) as the only accent. All token names preserved → all 7 pages converted as a set.
+- [x] **About page edits (commit `59e2de3`)**: "Who I most commonly work with" rewrite (owner-operators + executives); removed "Who I am beyond the work"; kept "What I believe."
+- [x] **ICP band standardized to $3M–$30M sitewide (commits `aafd3fb`, `b097448`, `161e7cb`)**: all marketing copy + diagnostic results interp now read $3M–$30M. Diagnostic's revenue-band **selector** deliberately left full-range (Under $3M → Over $40M) so larger visitors still feel captured.
+- [x] **Backend code complete** in `apps-script/Code.gs` (Sheet append + email + dual-score) — NOT yet deployed
+- [x] Forge code-reviewed (Critical + High fixed)
+
+## Open / awaiting
+
+- [ ] **Eugene's visual verdict on design v2.** Reviewing on the preview URL. Iterate from his delta list (hero glow intensity, body-text contrast, placard shadow depth, score halo, CTA weight) — batch fixes into one follow-up commit. Thomas can't verify visually from the headless VPS; Eugene is the design judge.
 
 ## What's next (in order)
 
-### Step 4 — Google Apps Script backend (~15 min)
-Eugene executes. Full walkthrough in `apps-script/README.md`. End state:
-- A new Sheet at `drive.google.com` named "atScale Diagnostic Submissions"
-- Apps Script Web App deployed as **"Execute as: Me"** + **"Who has access: Anyone"** (critical — not "Anyone within org")
-- Web App URL captured for Step 5
+### Step 4 — Google Apps Script backend (~15 min) — **OWNER: Eugene**
+Full walkthrough in `apps-script/README.md`. End state:
+- New Sheet "atScale Diagnostic Submissions"
+- Apps Script Web App deployed as **"Execute as: Me"** + **"Who has access: Anyone"** (critical — NOT "Anyone within org")
+- Capture the Web App URL for Step 5
+**This is the canonical next step.** Don't drift into more design/copy refinement until it's live.
 
-### Step 5 — Wire APPS_SCRIPT_URL into diagnostic.js (~3 min)
-Edit `/home/ecoleman/Projects/website/js/diagnostic.js` near top:
-```js
-const APPS_SCRIPT_URL = "REPLACE_ME_AFTER_DEPLOY"; // ← swap this
-```
-Replace with the Web App URL from Step 4. Commit + push. CF auto-deploys.
+### Step 5 — Wire APPS_SCRIPT_URL into diagnostic.js (~3 min) — **OWNER: Thomas (after Eugene hands over the URL)**
+Edit `js/diagnostic.js`, replace `const APPS_SCRIPT_URL = "REPLACE_ME_AFTER_DEPLOY"`. Commit + push. Then end-to-end test: submit the diagnostic, confirm a row in the Sheet + email in inbox.
 
-End-to-end test: open the Cloudflare site's `/diagnostic.html`, fill out, submit. Confirm row in Sheet + email in inbox.
+### Step 6 — Point atscale-advisors.com at Cloudflare — **OWNER: Eugene + Thomas**
+DNS is at Google Workspace. Hook the custom domain through the **Workers** custom-domain route (not Pages). Verify: `curl -I https://atscale-advisors.com 2>&1 | grep -i "server\|cf-ray"` → should show `server: cloudflare`.
 
-### Step 6 — Point atscale-advisors.com at Cloudflare Pages
-Eugene's domain DNS is at Google Workspace.
-- Option A (faster): add CNAME `www → atscale-website.pages.dev` in GWS DNS
-- Option B (cleaner): move DNS to Cloudflare (Add a site at dash.cloudflare.com → update nameservers at GWS)
-After DNS landed: in CF Pages, add custom domain `atscale-advisors.com` + `www.atscale-advisors.com`
-Verify with: `curl -I https://atscale-advisors.com 2>&1 | grep -i "server\|cf-ray"` — should show `server: cloudflare`
+### Step 7 — Cancel Squarespace — **OWNER: Eugene**
+ONLY after Step 6's curl confirms cloudflare. Squarespace renews 2026-06-15.
 
-### Step 7 — Cancel Squarespace
-ONLY after Step 6's curl confirms cloudflare server. Squarespace renews 2026-06-15.
-
-### Step 8 — Ship Post 001 to LinkedIn
-Drive first real traffic through the funnel. **Freeze the framework refinements** until we have ~20 diagnostic completions of real data.
+### Step 8 — Ship Post 001 to LinkedIn — **OWNER: Eugene**
+Drive first funnel traffic. **Freeze framework refinements** until ~20 real diagnostic completions.
 
 ## Active decisions / IP state
 
-- **Hosting:** Cloudflare Pages free, GitHub repo private, no build step
-- **Backend:** Google Apps Script + Sheet (Path 1 of upgrade ladder — Workers + D1 is the v2 destination when volume justifies)
-- **Brand voice on Home:** pain-first emotional ("you're working harder every quarter") — NOT journey-frame
-- **Brand voice on Frameworks:** cartographer/architect ("the pattern we've watched every business take") — journey-frame as spine
-- **Replication Wall™:** structural barrier between Replication and Intelligence in ORIA — has a logical home, not just a poetic phrase
-- **Scale Readiness Score™:** headline number on diagnostic results page; RI Maturity Curve stage is the depth
-- **ORIA = Operations → Replication → Intelligence → Automation** is the locked sequencing framework
-- **Foundation First™:** 3-stage view (Survive · Systematize · Scale); Plateau = where the Wall sits
-- **Pricing on Services:** transparent across all 5 rungs ($0 / $3.5K / $9.5K / $28K / $45-65K + $10K/mo retainer)
-- **Beehiiv:** deferred until ~10+ leads/week
-- **CRM:** deferred until ~15-20 active prospects or 2-3 paying clients
-- **Chair/EOS/Implementer differentiation:** ON About + Services + Frameworks (mid/deep funnel); OFF Homepage (deliberate, conversion path)
+- **Design:** charcoal placard (dark, elevation-based, bronze accent) — locked v2, replaced the cyanotype blueprint look per feedback (too busy/lined). No motion required.
+- **ICP copy:** $3M–$30M book of business across professional services or trades — consistent sitewide. Diagnostic selector stays full-range on purpose.
+- **Hosting:** Cloudflare Workers static assets, GitHub repo private, no build step.
+- **Backend:** Google Apps Script + Sheet (Path 1; Workers + D1 is the v2 destination when volume justifies).
+- **ORIA** = Operations → Replication → Intelligence → Automation (locked sequencing). **Replication Wall™** sits between Replication and Intelligence.
+- **Scale Readiness Score™** = headline number (10–40) on results; **RI Maturity Curve stage** (1–5) is the depth driving cost-of-Wall.
+- **Beehiiv** deferred until ~10+ leads/week. **CRM** deferred until ~15–20 active prospects or 2–3 paying clients.
 
 ## File locations
 
 | Where | What |
 |-------|------|
 | `/home/ecoleman/Projects/website/` | The live repo (this VPS) |
-| `/home/ecoleman/Projects/website/ISA.md` | Project ISA (142 ISCs, system of record) |
-| `/home/ecoleman/Projects/website/WAKEUP-CHECKLIST.md` | Original deploy walkthrough (some steps now stale; use this file's "What's next" instead) |
-| `/home/ecoleman/Projects/website/apps-script/README.md` | Apps Script deploy walkthrough |
-| `~/.claude/PAI/USER/PROJECTS/atscale-advisors/` | Project notes, content drafts (HOME_PAGE_v1.md etc.), design system |
+| `css/styles.css` | Charcoal Placard v2 design system (token-driven) |
+| `js/diagnostic.js` | Questions, scoring, results, POST to backend (`APPS_SCRIPT_URL` still placeholder) |
+| `ISA.md` | Project ISA (system of record) |
+| `apps-script/README.md` | Apps Script deploy walkthrough (Step 4) |
+| `~/.claude/PAI/USER/PROJECTS/atscale-advisors/` | Project notes, content drafts, design system |
 | `~/.claude/PAI/USER/PROJECTS/atscale-advisors/SESSION_STATE.md` | Cross-Thomas pointer to this file |
 
 ## If you (next-Thomas) pick this up
 
-1. **On THIS VPS (Linux Thomas):** working dir already set; everything is in place. Start at "Step 4" above.
-2. **On Mac Thomas:** the code is on GitHub. Either SSH to this VPS via Tailscale (`u.eugenius.tech`) to continue working here, or `git clone git@github.com:eugeniousC/atscale-website.git` locally to work from Mac. Both work; the VPS path keeps the build context intact, the Mac path is faster local iteration.
-3. Either way, **the canonical next step is Step 4 (Apps Script backend deploy).** Don't drift into more framework refinements until that's live AND we have submission data.
+1. **On THIS VPS (Linux Thomas):** working dir set, tree clean and pushed. Start at **Step 4** (or process Eugene's design-delta list first if he's given one).
+2. **On Mac Thomas:** `git clone git@github.com:eugeniousC/atscale-website.git` for local iteration, or SSH to this VPS over Tailscale (`u.eugenius.tech`) to keep build context. Both work.
+3. **Canonical next step: Step 4 — Apps Script backend deploy (Eugene-owned).** Don't drift into more design/copy work until the backend is live AND there's submission data.
 
 — Thomas (Linux instance, u.eugenius.tech)
