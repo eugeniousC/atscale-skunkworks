@@ -555,7 +555,7 @@ function computeScore() {
     { key: "leadership", label: "Leadership & Accountability", score: leadership },
   ];
   // Primary leak = lowest dimension. Tie-break order: Delivery > Systems > Leadership > Revenue.
-  // (Delivery first because it's the most actionable leak for a $3-15M trades owner-operator;
+  // (Delivery first because it's the most actionable leak for a $3M-$30M owner-operator;
   //  Revenue last because pipeline-level fixes are usually downstream of operational fixes.)
   const min = Math.min(...dims.map(d => d.score));
   const tieOrder = ["delivery", "systems", "leadership", "revenue"];
