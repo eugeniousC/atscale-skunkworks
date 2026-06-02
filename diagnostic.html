@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Growth Friction Diagnostic &mdash; atScale Advisors</title>
+  <meta name="description" content="15 minutes. Free. No call required. Names what's keeping your $3M–$15M business dependent on you — and what it's costing you, in dollars." />
+  <meta name="theme-color" content="#0F2238" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="/"><span class="brand-mark">[↗]</span>atScale Advisors</a>
+      <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" onclick="this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true');document.getElementById('primary-nav').classList.toggle('open')">Menu</button>
+      <nav class="nav" id="primary-nav" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/frameworks.html">Frameworks</a>
+        <a href="/insights.html">Insights</a>
+        <a href="/services.html">Services</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/diagnostic.html" class="nav-cta" aria-current="page">Take the Diagnostic</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="diagnostic-shell">
+    <div class="diagnostic-wrap">
+
+      <div class="diag-progress" id="diag-progress" hidden>
+        <span id="diag-step-label">Step 1 of 19</span>
+        <div class="diag-progress-bar"><div class="diag-progress-fill" id="diag-progress-fill"></div></div>
+        <span id="diag-pct">0%</span>
+      </div>
+
+      <!-- The JS rendering target. Renders welcome → P1-P7 → Q1-Q12 → submitting → results. -->
+      <div id="diag-stage" class="diag-card" aria-live="polite">
+        <!-- initial loading state, replaced by JS -->
+        <h2>Growth Friction Diagnostic&trade;</h2>
+        <p>Loading the diagnostic&hellip; if this doesn&rsquo;t move in a few seconds, your browser may be blocking scripts. Enable JavaScript or email <a href="mailto:eugene@atscale-advisors.com">eugene@atscale-advisors.com</a>.</p>
+      </div>
+
+      <p class="muted" style="text-align:center; margin-top: var(--gap-md); font-size: 0.85rem;">
+        Your answers are not shared. We&rsquo;ll email your results to the address you provide.
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col"><strong>atScale Advisors</strong><br>Revenue Systems Architect<br>Eastern Time, USA</div>
+        <div class="col"><a href="mailto:eugene@atscale-advisors.com">eugene@atscale-advisors.com</a><br><a href="https://www.linkedin.com/in/eugene-coleman" rel="noopener">LinkedIn</a><br><a href="/contact.html">Contact &rarr;</a></div>
+        <div class="col"><a href="/">Home</a><br><a href="/frameworks.html">Frameworks</a><br><a href="/services.html">Services</a></div>
+      </div>
+      <p class="small">&copy; 2026 atScale Advisors LLC. Built by hand, not bought.</p>
+    </div>
+  </footer>
+
+  <script src="/js/diagnostic.js"></script>
+</body>
+</html>

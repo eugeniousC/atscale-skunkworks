@@ -1,0 +1,39 @@
+# Editor + OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+*~
+
+# Dependencies (we use none, but defensive)
+node_modules/
+package-lock.json
+
+# Local env / secrets — never commit
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Local build artifacts (none expected, but defensive)
+dist/
+build/
+.cache/
+
+# Cloudflare wrangler cache (if installed locally)
+.wrangler/
+wrangler.log
+
+# Apps Script — the .clasp file holds the script ID; safe to commit
+# but the .clasprc.json (auth tokens) must NEVER be committed.
+.clasprc.json
+
+# Logs
+*.log
+
+# Pre-existing project-root artifacts — exclude from new repo
+/${HOME}/
+/Plans/

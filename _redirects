@@ -1,0 +1,11 @@
+# Cloudflare Pages redirects
+# Format: source destination status
+# https://developers.cloudflare.com/pages/configuration/redirects/
+
+# Optional clean URL — let users hit /diagnostic instead of /diagnostic.html
+/diagnostic     /diagnostic.html    200
+/about          /about.html         200
+/services       /services.html      200
+/frameworks     /frameworks.html    200
+/insights       /insights.html      200
+/contact        /contact.html       200
