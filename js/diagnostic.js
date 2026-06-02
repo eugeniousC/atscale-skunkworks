@@ -404,7 +404,7 @@ function render() {
 function renderWelcome() {
   return `
     <h2>Growth Friction Diagnostic&trade;</h2>
-    <p>If you're an owner-operator of a <strong>$3M–$15M trades or field-service business</strong>, this diagnostic names what's structurally leaking revenue inside your business — in dollars.</p>
+    <p>If you're running a <strong>$3M–$30M book of business</strong> across professional services or trades, this diagnostic names what's structurally leaking revenue inside your business — in dollars.</p>
     <ul>
       <li><strong>15 minutes</strong> &middot; 19 questions</li>
       <li>Free &middot; no sales call required</li>
@@ -592,9 +592,15 @@ function renderResults() {
       ${r.stage.n <= 2 ? `<img class="diag-wall-img" src="/assets/replicationWall.png" alt="The Replication Wall — a structural barrier between hustle-led growth and systems-led scale.">` : ""}
 
       <div class="diag-cta-block">
-        <h3>${escape(r.stage.cta.label)}</h3>
-        <p>${escape(r.stage.cta.lead)}</p>
-        <p><a class="btn" href="${escape(safeUrl(r.stage.cta.url))}" target="_blank" rel="noopener noreferrer">${escape(r.stage.cta.label)} &rarr;</a></p>
+        <h3>Where to go next</h3>
+        <p><strong>Start with a Strategy Discovery call.</strong> 30 minutes, free. No commitment, no pitch. We talk through your results, you decide whether the next step makes sense.</p>
+        <p><a class="btn" href="${escape(safeUrl(STRATEGY_DISCOVERY_URL))}" target="_blank" rel="noopener noreferrer">Book a Strategy Discovery call &rarr;</a></p>
+        ${r.stage.cta.url !== STRATEGY_DISCOVERY_URL ? `
+        <hr style="border-top: 1px solid var(--blueprint-line); margin: var(--gap-md) 0;">
+        <p class="muted" style="font-size: 0.9rem;">Or, based on your stage, the most efficient next move:</p>
+        <p><strong>${escape(r.stage.cta.label)}.</strong> ${escape(r.stage.cta.lead)}</p>
+        <p><a class="btn-text" href="${escape(safeUrl(r.stage.cta.url))}" target="_blank" rel="noopener noreferrer">${escape(r.stage.cta.label)} &rarr;</a></p>
+        ` : ""}
       </div>
 
       <p class="muted" style="margin-top: var(--gap-md); font-size: 0.85rem;">A copy of these results is being emailed to ${escape(state.answers.p3 || "you")}. Eugene reads every submission himself; expect a personal follow-up within 24 hours.</p>
