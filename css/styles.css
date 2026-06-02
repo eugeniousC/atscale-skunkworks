@@ -508,18 +508,12 @@ th {
 /* ---------- Diagnostic form ---------- */
 .diagnostic-shell {
   min-height: calc(100vh - 200px);
-  background-color: var(--blueprint-deep);
+  background-color: var(--paper);
   background-image:
-    linear-gradient(var(--blueprint-grid-bright) 1px, transparent 1px),
-    linear-gradient(90deg, var(--blueprint-grid-bright) 1px, transparent 1px),
-    linear-gradient(var(--blueprint-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--blueprint-grid) 1px, transparent 1px);
-  background-size: 96px 96px, 96px 96px, 32px 32px, 32px 32px;
+    linear-gradient(var(--blueprint-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--blueprint-line) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
-.diagnostic-shell .diag-progress { color: var(--blueprint-text-muted); }
-.diagnostic-shell .diag-progress-bar { background: var(--blueprint-grid-bright); }
-.diagnostic-shell .muted { color: var(--blueprint-text-muted); }
-.diagnostic-shell > .diagnostic-wrap > p.muted { color: var(--blueprint-text-muted); }
 .diagnostic-wrap {
   max-width: var(--max-w-narrow);
   margin: 0 auto;
