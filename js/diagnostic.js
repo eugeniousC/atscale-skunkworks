@@ -242,7 +242,7 @@ const STAGES = [
       url: FRICTION_SESSION_URL,
       lead: "Name the leak. A 90-minute Friction Diagnostic Session walks you out with a written 5-page recap, the specific leak named in dollars, and the Foundation First next move.",
     },
-    interp: "Dashboard Theater means the data and tools are in place, but the team can't yet predict outcomes from them. Most $3-$15M owner-operators stall here. The gap between Stage 2 and Stage 3 is the Replication Wall — the business has outgrown what one person can hold, and working harder doesn't get you across it.",
+    interp: "Dashboard Theater means the data and tools are in place, but the team can't yet predict outcomes from them. Most $3M–$30M owner-operators stall here. The gap between Stage 2 and Stage 3 is the Replication Wall — the business has outgrown what one person can hold, and working harder doesn't get you across it.",
   },
   {
     n: 3,
@@ -268,7 +268,7 @@ const STAGES = [
       url: STRATEGY_DISCOVERY_URL,
       lead: "You're operating ahead of the curve. Let's discuss Embedded Advisory or strategic counsel on the rare exceptions the Phase 2 system isn't built to handle.",
     },
-    interp: "Intelligent Acceleration means your operations and intelligence layers compound. AI augments without breaking. Most $3-$15M businesses never reach here.",
+    interp: "Intelligent Acceleration means your operations and intelligence layers compound. AI augments without breaking. Most $3M–$30M businesses never reach here.",
   },
   {
     n: 5,
