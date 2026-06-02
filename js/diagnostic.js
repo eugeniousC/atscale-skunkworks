@@ -286,7 +286,20 @@ const STAGES = [
 ];
 
 function stageFor(total) {
-  return STAGES.find(s => total >= s.band[0] && total <= s.band[1]) || STAGES[STAGES.length - 1];
+  // Bands are contiguous 12-48. Out-of-range total signals incomplete state — return Stage 1 as the
+  // safer fallback (a refreshed-from-empty-state user should not be shown "Autonomous Scale").
+  if (typeof total !== "number" || total < 12 || total > 48) return STAGES[0];
+  return STAGES.find(s => total >= s.band[0] && total <= s.band[1]) || STAGES[0];
+}
+
+// Reject non-https/mailto URLs to defang any future XSS via a stage CTA that gets parameterized.
+function safeUrl(url) {
+  if (typeof url !== "string") return "#";
+  var trimmed = url.trim();
+  if (/^https:\/\//i.test(trimmed)) return trimmed;
+  if (/^mailto:/i.test(trimmed)) return trimmed;
+  if (/^\//.test(trimmed)) return trimmed;
+  return "#";
 }
 
 /* ============================================================
@@ -510,9 +523,14 @@ function computeScore() {
     { key: "systems",    label: "Systems & Data",            score: systems },
     { key: "leadership", label: "Leadership & Accountability", score: leadership },
   ];
-  // Primary leak = lowest dimension. Ties broken by order in array (Revenue first).
+  // Primary leak = lowest dimension. Tie-break order: Delivery > Systems > Leadership > Revenue.
+  // (Delivery first because it's the most actionable leak for a $3-15M trades owner-operator;
+  //  Revenue last because pipeline-level fixes are usually downstream of operational fixes.)
   const min = Math.min(...dims.map(d => d.score));
-  const primary = dims.find(d => d.score === min);
+  const tieOrder = ["delivery", "systems", "leadership", "revenue"];
+  const primary = tieOrder
+    .map(k => dims.find(d => d.key === k && d.score === min))
+    .find(Boolean) || dims.find(d => d.score === min);
   const stage = stageFor(total);
 
   // Cost-of-Wall ± 20%
@@ -576,7 +594,7 @@ function renderResults() {
       <div class="diag-cta-block">
         <h3>${escape(r.stage.cta.label)}</h3>
         <p>${escape(r.stage.cta.lead)}</p>
-        <p><a class="btn" href="${escape(r.stage.cta.url)}" target="_blank" rel="noopener">${escape(r.stage.cta.label)} &rarr;</a></p>
+        <p><a class="btn" href="${escape(safeUrl(r.stage.cta.url))}" target="_blank" rel="noopener noreferrer">${escape(r.stage.cta.label)} &rarr;</a></p>
       </div>
 
       <p class="muted" style="margin-top: var(--gap-md); font-size: 0.85rem;">A copy of these results is being emailed to ${escape(state.answers.p3 || "you")}. Eugene reads every submission himself; expect a personal follow-up within 24 hours.</p>
@@ -741,6 +759,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // Recover: if a refresh landed mid-submit, send the user to results so they see their score
     state.step = "results";
     saveState();
+  }
+  // Guard against a stale "results" step with incomplete answers (e.g. user opens the page
+  // tomorrow with a partially-filled session). Force a restart if scoring would be bogus.
+  if (state.step === "results") {
+    const r = computeScore();
+    if (r.total < 12) {
+      clearState();
+      state = { step: "welcome", answers: { ...initialAnswers } };
+      saveState();
+    }
   }
   render();
 

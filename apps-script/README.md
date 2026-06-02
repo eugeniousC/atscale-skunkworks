@@ -77,7 +77,7 @@ If you see that, the doGet handler works. Now run a POST test — open a termina
 
 ```bash
 curl -L -X POST \
-  -H "Content-Type: text/plain" \
+  -H "Content-Type: text/plain;charset=utf-8" \
   -d '{"submitted_at":"2026-06-02T00:00:00Z","p1_first_name":"TEST","p2_last_name":"USER","p3_email":"test@example.com","p4_company":"SmokeCo","p5_revenue_band":"$5M – $10M","p6_industry":"Professional services","p7_role":"Founder / CEO / Owner","q1":2,"q2":2,"q3":2,"q4":2,"q5":2,"q6":2,"q7":2,"q8":2,"q9":2,"q10":2,"q11":2,"q12":2,"dim_revenue":6,"dim_delivery":6,"dim_systems":6,"dim_leadership":6,"total_score":24,"stage_n":2,"stage_name":"Dashboard Theater","primary_leak":"Revenue Engine","cost_low":840000,"cost_high":1260000,"user_agent":"smoke-test"}' \
   "PASTE_YOUR_WEB_APP_URL_HERE"
 ```

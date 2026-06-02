@@ -50,13 +50,17 @@ function doPost(e) {
     const payload = parsePayload_(e);
     const sheet = ensureSheet_();
     sheet.appendRow(COLUMNS.map(c => payload[c] == null ? "" : payload[c]));
+    let mailOk = true;
+    let mailErrMsg = "";
     try {
       sendNotificationEmail_(payload);
     } catch (mailErr) {
       // Don't fail the submission if mail fails — the row is safe in the sheet.
+      mailOk = false;
+      mailErrMsg = String(mailErr);
       console.error("Mail send failed:", mailErr);
     }
-    return jsonResponse_({ ok: true });
+    return jsonResponse_({ ok: true, mail_ok: mailOk, mail_error: mailErrMsg || undefined });
   } catch (err) {
     console.error("doPost error:", err);
     return jsonResponse_({ ok: false, error: String(err) });

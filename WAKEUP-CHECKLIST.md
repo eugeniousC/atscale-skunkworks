@@ -209,13 +209,21 @@ In the Cloudflare Pages dashboard for `atscale-website`:
 - Open the diagnostic at `https://atscale-advisors.com/diagnostic` and complete it — submission should still land in your Sheet.
 - Force-refresh (Ctrl-Shift-R) a few times to make sure no Squarespace-cached HTML is still hanging around.
 
+**The binary "we cut over" signal** — run this from your terminal:
+
+```bash
+curl -I https://atscale-advisors.com 2>&1 | grep -i "server\|cf-ray"
+```
+
+You should see `server: cloudflare` and a `cf-ray` header. If you don't, DNS hasn't propagated yet — wait, retry, do NOT cancel Squarespace.
+
 **If the homepage still shows the OLD Squarespace site after 1 hour, the DNS propagation hasn't completed yet.** Check `dig atscale-advisors.com +short` — once it returns Cloudflare's IP, the new site is live.
 
 ---
 
 ## 7. Cancel Squarespace (5 min, but be careful)
 
-**Do this AFTER step 6 is fully verified.**
+**Do this AFTER step 6 is fully verified.** The `curl -I https://atscale-advisors.com` from step 6d must show `server: cloudflare` BEFORE you proceed. If it's still showing a Squarespace server, the cutover hasn't happened yet and cancelling now will take your site offline.
 
 1. Log into Squarespace.
 2. Go to billing / subscription settings for the atScale site.

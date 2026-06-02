@@ -35,5 +35,8 @@ wrangler.log
 *.log
 
 # Pre-existing project-root artifacts — exclude from new repo
+# Note: there is a literal directory at the project root named "${HOME}"
+# (created by an earlier pathing bug); gitignore matches it literally.
 /${HOME}/
+/${HOME}
 /Plans/
