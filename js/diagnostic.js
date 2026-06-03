@@ -402,7 +402,12 @@ function renderProgress() {
   const total = ANSWERABLE.length;
   const pct = Math.round((idx / total) * 100);
   fill().style.width = pct + "%";
-  stepLbl().textContent = `Step ${idx + 1} of ${total}`;
+  // Label distinguishes the 4 profile screens ("About you") from the 12 scored
+  // questions ("Question N of 12") so the counter always matches the public "12 questions".
+  const qIndex = QUESTIONS.findIndex(q => q.id === state.step);
+  stepLbl().textContent = qIndex >= 0
+    ? `Question ${qIndex + 1} of ${QUESTIONS.length}`
+    : "About you";
   pctLbl().textContent = pct + "%";
 }
 
@@ -437,7 +442,7 @@ function renderWelcome() {
     <h2>Growth Friction Diagnostic&trade;</h2>
     <p>If you're running a <strong>$3M–$30M book of business</strong> across professional services or trades, this diagnostic names what's structurally leaking revenue inside your business — in dollars.</p>
     <ul>
-      <li><strong>15 minutes</strong> &middot; 19 questions</li>
+      <li><strong>15 minutes</strong> &middot; 12 questions</li>
       <li>Free &middot; no sales call required</li>
       <li>You get the readout immediately</li>
       <li>Your stage on the Revenue Intelligence Maturity Curve&trade;</li>
