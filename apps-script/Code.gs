@@ -200,21 +200,12 @@ function sendProspectEmail_(p) {
   const tier = p.src_tier || "";
   const img = `${SITE_BASE_URL}/assets/journey-${tierInfo.key}.png`;
 
-  // Stage-aware emphasis: not-yet-a-fit results lead with the free door.
-  const discoveryPrimary =
-    String(p.p5_revenue_band || "") === "Under $3M" || p.src_tier === "The Grind";
-
   const btnPrimary = (href, label) =>
     `<a href="${href}" style="display:inline-block;background:#B0762F;color:#FFFFFF;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:15px;padding:14px 26px;border-radius:8px;">${label}</a>`;
-  const btnOutline = (href, label) =>
-    `<a href="${href}" style="display:inline-block;background:#FFFFFF;color:#0F2238;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:15px;padding:13px 25px;border-radius:8px;border:1px solid #C7D6E4;">${label}</a>`;
 
-  const discoveryBtn = discoveryPrimary
-    ? btnPrimary(CAL_DISCOVERY, "Book a free Strategy Discovery call ->")
-    : btnOutline(CAL_DISCOVERY, "Book a free Strategy Discovery call ->");
-  const sessionBtn = discoveryPrimary
-    ? btnOutline(CAL_SESSION, "Reserve the 90-min session ->")
-    : btnPrimary(CAL_SESSION, "Book & reserve the session ->");
+  // Both CTAs solid gold, equal weight -- open-door: the free call and the paid session invite alike.
+  const discoveryBtn = btnPrimary(CAL_DISCOVERY, "Book a free Strategy Discovery call ->");
+  const sessionBtn   = btnPrimary(CAL_SESSION, "Book & reserve the session ->");
 
   const html = `<!doctype html>
 <html><body style="margin:0;padding:0;background:#EEF2F6;">
