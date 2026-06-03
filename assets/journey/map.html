@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Scaling Journey Map — generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" />
+<style>
+  :root{
+    --bg:#0F1318; --ink:#F2F5F8; --body:#AEB8C4; --slate:#7E8A98;
+    --bronze:#C8893B; --bronze-dim:#6f5226; --rust:#E0674A;
+    --line:#2A323D;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:var(--bg);}
+  /* The card IS the page — full-page screenshot = the graphic */
+  .map{
+    width:1040px; margin:0 auto; background:var(--bg);
+    padding:44px 56px 52px; color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    position:relative; overflow:hidden;
+  }
+  .map::before{ /* faint bronze glow, top-right */
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 60% 70% at 88% -10%, rgba(200,137,59,0.16), transparent 60%);
+    pointer-events:none;
+  }
+  .head{display:flex; justify-content:space-between; align-items:flex-end; position:relative; z-index:1; margin-bottom:46px;}
+  .kicker{font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:var(--bronze); margin:0 0 6px;}
+  .title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:28px; letter-spacing:-.01em; margin:0;}
+  .score{font-family:'IBM Plex Mono',monospace; text-align:right; line-height:1;}
+  .score .num{font-size:46px; font-weight:500; color:#fff;}
+  .score .den{font-size:22px; color:var(--slate);}
+  .score .tier{display:block; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; color:var(--bronze); margin-top:8px; letter-spacing:.01em;}
+
+  /* track */
+  .track{position:relative; z-index:1; margin:0 8px;}
+  .rail{position:absolute; top:11px; left:0; right:0; height:2px; background:var(--line);}
+  .rail-done{position:absolute; top:11px; left:0; height:2px; background:linear-gradient(90deg,var(--bronze-dim),var(--bronze));}
+  .stops{position:relative; display:flex;}
+  .stop{flex:1; text-align:center; position:relative;}
+  .dot{width:14px;height:14px;border-radius:50%; background:var(--line); border:2px solid var(--bg); margin:5px auto 0; position:relative; z-index:2;}
+  .stop .name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; color:var(--slate); margin-top:18px;}
+  .stop .rng{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--slate); opacity:.7; margin-top:3px;}
+  .stop.passed .name{color:var(--body);}
+  .stop.here .dot{
+    width:26px;height:26px; margin-top:-1px; background:var(--bronze);
+    box-shadow:0 0 0 6px rgba(200,137,59,.18), 0 0 26px rgba(200,137,59,.5);
+  }
+  .stop.here .name{color:#fff; font-size:18px;}
+  .youare{
+    position:absolute; left:50%; transform:translateX(-50%); top:-40px;
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+    color:#0F1318; background:var(--bronze); padding:5px 11px; border-radius:999px; white-space:nowrap; font-weight:500;
+  }
+  .youare::after{content:''; position:absolute; left:50%; bottom:-5px; transform:translateX(-50%) rotate(45deg); width:8px;height:8px; background:var(--bronze);}
+
+  /* Replication Wall at the Plateau→Inflection gap (50%) */
+  .wall{position:absolute; left:50%; top:-14px; bottom:-2px; transform:translateX(-50%); z-index:1;}
+  .wall-line{width:0; height:100%; border-left:2px dashed var(--rust); opacity:.85;}
+  .wall-lbl{position:absolute; top:-2px; left:50%; transform:translateX(-50%); white-space:nowrap;
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--rust); background:var(--bg); padding:0 6px;}
+  .foot{position:relative; z-index:1; margin-top:40px; font-size:13.5px; color:var(--body); line-height:1.5; max-width:760px;}
+  .foot b{color:var(--ink);}
+</style>
+</head>
+<body>
+  <div class="map" id="map">
+    <div class="head">
+      <div>
+        <p class="kicker">Your Scaling Journey</p>
+        <h1 class="title">Where your business sits today</h1>
+      </div>
+      <div class="score">
+        <span class="num" id="num">22</span><span class="den">/40</span>
+        <span class="tier" id="tierlbl">The Plateau</span>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="rail"></div>
+      <div class="rail-done" id="raildone"></div>
+      <div class="wall"><div class="wall-line"></div><span class="wall-lbl">Replication Wall&trade;</span></div>
+      <div class="stops" id="stops">
+        <div class="stop" data-tier="grind"><div class="dot"></div><div class="name">The Grind</div><div class="rng">10&ndash;19</div></div>
+        <div class="stop" data-tier="plateau"><div class="dot"></div><div class="name">The Plateau</div><div class="rng">20&ndash;27</div></div>
+        <div class="stop" data-tier="inflection"><div class="dot"></div><div class="name">The Inflection</div><div class="rng">28&ndash;34</div></div>
+        <div class="stop" data-tier="machine"><div class="dot"></div><div class="name">The Machine</div><div class="rng">35&ndash;40</div></div>
+      </div>
+    </div>
+
+    <p class="foot" id="foot"></p>
+  </div>
+
+<script>
+  const TIERS = ["grind","plateau","inflection","machine"];
+  const NAMES = {grind:"The Grind", plateau:"The Plateau", inflection:"The Inflection", machine:"The Machine"};
+  const FOOT = {
+    grind:"You're building the foundation. The Replication Wall is still ahead — the goal now is systems that don't depend on you.",
+    plateau:"You're at the Wall. The business has outgrown what one person can hold, and working harder won't get you across — structure will.",
+    inflection:"You're through the Wall. The work now is acceleration: forecast discipline, decision rights, and an engine that compounds.",
+    machine:"You're operating at altitude. The engine runs without you in every room. From here it's strategic counsel, not foundation repair."
+  };
+  const q = new URLSearchParams(location.search);
+  const tier = (q.get("tier")||"plateau").toLowerCase();
+  const score = q.get("score") || "22";
+  const i = Math.max(0, TIERS.indexOf(tier));
+  document.getElementById("num").textContent = score;
+  document.getElementById("tierlbl").textContent = NAMES[tier]||"The Plateau";
+  document.getElementById("foot").innerHTML = FOOT[tier]||FOOT.plateau;
+  const stops = [...document.querySelectorAll(".stop")];
+  stops.forEach((s,idx)=>{
+    if(idx < i) s.classList.add("passed");
+    if(idx === i){
+      s.classList.add("here","passed");
+      const tag=document.createElement("div"); tag.className="youare"; tag.textContent="You are here";
+      s.appendChild(tag);
+    }
+  });
+  // filled rail up to the active stop's center
+  const pct = (i*25)+12.5;
+  document.getElementById("raildone").style.width = pct+"%";
+</script>
+</body>
+</html>
