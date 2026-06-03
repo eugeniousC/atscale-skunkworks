@@ -1,5 +1,5 @@
 /**
- * atScale Advisors — Growth Friction Diagnostic backend
+ * atScale Advisors -- Growth Friction Diagnostic backend
  *
  * Deploy this as a Google Apps Script Web App bound to a Google Sheet
  * named `atScale Diagnostic Submissions` in Eugene's Workspace.
@@ -14,7 +14,7 @@
  */
 
 /* ============================================================
- * CONFIG — edit these once after creating the Sheet & deploying
+ * CONFIG -- edit these once after creating the Sheet & deploying
  * ============================================================ */
 const SHEET_NAME = "Submissions";
 const NOTIFY_EMAIL = "eugene@atscale-advisors.com";
@@ -51,19 +51,19 @@ const COLUMNS = [
 const TIER_EMAIL = {
   "The Grind": {
     key: "grind",
-    means: "The business is running on heroics and your bandwidth. That's survivable, but it doesn't scale — the first work is foundation, not growth.",
+    means: "The business is running on heroics and your bandwidth. That's survivable, but it doesn't scale -- the first work is foundation, not growth.",
   },
   "The Plateau": {
     key: "plateau",
-    means: "You have systems and dashboards, but the team can't yet predict outcomes from them. This is where most owner-operators stall — and where the biggest, most fixable leaks hide.",
+    means: "You have systems and dashboards, but the team can't yet predict outcomes from them. This is where most owner-operators stall -- and where the biggest, most fixable leaks hide.",
   },
   "The Inflection": {
     key: "inflection",
-    means: "Your foundation is honest. The next altitude is building the systems that compound — forecast discipline, decision rights, and the architecture that lets the business run without you in every room.",
+    means: "Your foundation is honest. The next altitude is building the systems that compound -- forecast discipline, decision rights, and the architecture that lets the business run without you in every room.",
   },
   "The Machine": {
     key: "machine",
-    means: "You're operating ahead of the curve. The remaining work is strategic — the rare, high-leverage moves your current system isn't built to handle.",
+    means: "You're operating ahead of the curve. The remaining work is strategic -- the rare, high-leverage moves your current system isn't built to handle.",
   },
 };
 
@@ -72,7 +72,7 @@ const TIER_EMAIL = {
  * ============================================================ */
 function doGet(_e) {
   return ContentService
-    .createTextOutput("atScale diagnostic backend OK — " + new Date().toISOString())
+    .createTextOutput("atScale diagnostic backend OK -- " + new Date().toISOString())
     .setMimeType(ContentService.MimeType.TEXT);
 }
 
@@ -122,7 +122,7 @@ function parsePayload_(e) {
 function ensureSheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   if (!ss) {
-    throw new Error("Active spreadsheet missing — bind this script to a Google Sheet (Extensions → Apps Script from inside the Sheet).");
+    throw new Error("Active spreadsheet missing -- bind this script to a Google Sheet (Extensions -> Apps Script from inside the Sheet).");
   }
   let sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) {
@@ -145,7 +145,7 @@ function isEmail_(s) { return typeof s === "string" && /^[^@\s]+@[^@\s]+\.[^@\s]
 
 /* ---------- Internal notification to Eugene (plain text) ---------- */
 function sendNotificationEmail_(p) {
-  const subject = `[Diagnostic] ${p.p4_company || "(unknown company)"} — ${p.p5_revenue_band || "?"} — SRC ${p.src_score || "?"} (${p.src_tier || ""}) / Stage ${p.stage_n || "?"}`;
+  const subject = `[Diagnostic] ${p.p4_company || "(unknown company)"} -- ${p.p5_revenue_band || "?"} -- SRC ${p.src_score || "?"} (${p.src_tier || ""}) / Stage ${p.stage_n || "?"}`;
   const bodyLines = [
     `New Growth Friction Diagnostic submission`,
     ``,
@@ -156,11 +156,11 @@ function sendNotificationEmail_(p) {
     `Industry:  ${p.p6_industry || ""}`,
     `Role:      ${p.p7_role || ""}`,
     ``,
-    `Scale Readiness Score: ${p.src_score || "?"} / 40 — ${p.src_tier || ""}`,
-    `RI Curve Stage:        ${p.stage_n || "?"} — ${p.stage_name || ""}`,
+    `Scale Readiness Score: ${p.src_score || "?"} / 40 -- ${p.src_tier || ""}`,
+    `RI Curve Stage:        ${p.stage_n || "?"} -- ${p.stage_name || ""}`,
     `Raw total:             ${p.total_score || "?"} / 48`,
     `Primary leak:          ${p.primary_leak || ""}`,
-    `Cost of the Wall:      ${money_(p.cost_low)} – ${money_(p.cost_high)} / year`,
+    `Cost of the Wall:      ${money_(p.cost_low)} - ${money_(p.cost_high)} / year`,
     ``,
     `Dimensions:`,
     `  Revenue Engine:            ${p.dim_revenue || "?"} / 12`,
@@ -191,7 +191,7 @@ function sendNotificationEmail_(p) {
 /* ---------- Prospect-facing result email (HTML) ---------- */
 function sendProspectEmail_(p) {
   if (!isEmail_(p.p3_email)) {
-    console.warn("Prospect email skipped — missing/invalid address:", p.p3_email);
+    console.warn("Prospect email skipped -- missing/invalid address:", p.p3_email);
     return;
   }
   const tierInfo = TIER_EMAIL[p.src_tier] || TIER_EMAIL["The Plateau"];
@@ -210,11 +210,11 @@ function sendProspectEmail_(p) {
     `<a href="${href}" style="display:inline-block;background:#FFFFFF;color:#0F2238;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-weight:bold;font-size:15px;padding:13px 25px;border-radius:8px;border:1px solid #C7D6E4;">${label}</a>`;
 
   const discoveryBtn = discoveryPrimary
-    ? btnPrimary(CAL_DISCOVERY, "Book a free Strategy Discovery call →")
-    : btnOutline(CAL_DISCOVERY, "Book a free Strategy Discovery call →");
+    ? btnPrimary(CAL_DISCOVERY, "Book a free Strategy Discovery call ->")
+    : btnOutline(CAL_DISCOVERY, "Book a free Strategy Discovery call ->");
   const sessionBtn = discoveryPrimary
-    ? btnOutline(CAL_SESSION, "Reserve the 90-min session →")
-    : btnPrimary(CAL_SESSION, "Book & reserve the session →");
+    ? btnOutline(CAL_SESSION, "Reserve the 90-min session ->")
+    : btnPrimary(CAL_SESSION, "Book & reserve the session ->");
 
   const html = `<!doctype html>
 <html><body style="margin:0;padding:0;background:#EEF2F6;">
@@ -223,8 +223,8 @@ function sendProspectEmail_(p) {
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:#FFFFFF;border-radius:14px;overflow:hidden;font-family:Arial,Helvetica,sans-serif;">
   <tr><td style="padding:28px 32px 8px;">
     <p style="margin:0;font-size:13px;letter-spacing:2px;color:#B0762F;font-weight:bold;">ATSCALE ADVISORS</p>
-    <h1 style="margin:8px 0 0;font-size:22px;line-height:1.25;color:#0F2238;">Hi ${first} — here's where you are.</h1>
-    <p style="margin:14px 0 0;font-size:15px;line-height:1.6;color:#44566B;">You just finished the Growth Friction Diagnostic. Here's your result — and where it puts you on the journey most $3M&ndash;$30M businesses are climbing.</p>
+    <h1 style="margin:8px 0 0;font-size:22px;line-height:1.25;color:#0F2238;">Hi ${first} -- here's where you are.</h1>
+    <p style="margin:14px 0 0;font-size:15px;line-height:1.6;color:#44566B;">You just finished the Growth Friction Diagnostic. Here's your result -- and where it puts you on the journey most $3M-$30M businesses are climbing.</p>
   </td></tr>
   <tr><td align="center" style="padding:18px 24px 4px;">
     <p style="margin:0;font-size:13px;color:#44566B;">Your Scale Readiness Score</p>
@@ -232,29 +232,29 @@ function sendProspectEmail_(p) {
     <p style="margin:6px 0 0;font-size:17px;font-weight:bold;color:#B0762F;">${tier}</p>
   </td></tr>
   <tr><td align="center" style="padding:14px 16px 6px;">
-    <img src="${img}" width="540" alt="Your Scaling Journey — ${tier}" style="width:540px;max-width:100%;height:auto;border-radius:12px;display:block;" />
+    <img src="${img}" width="540" alt="Your Scaling Journey -- ${tier}" style="width:540px;max-width:100%;height:auto;border-radius:12px;display:block;" />
   </td></tr>
   <tr><td style="padding:14px 32px 0;">
     <p style="margin:0 0 14px;font-size:15px;line-height:1.6;color:#44566B;"><strong style="color:#0F2238;">What this means:</strong> ${tierInfo.means}</p>
-    <p style="margin:0 0 14px;font-size:15px;line-height:1.6;color:#44566B;">Your biggest leak right now is <strong style="color:#0F2238;">${p.primary_leak || "operational drag"}</strong>, and at your revenue band that's quietly costing an estimated <strong style="color:#A8412A;">${money_(p.cost_low)}&ndash;${money_(p.cost_high)} a year</strong> in rework, dropped follow-through, and friction you don't have the bandwidth to chase down.</p>
-    <p style="margin:0 0 8px;font-size:15px;line-height:1.6;color:#44566B;">The gap you're feeling has a name — the <strong style="color:#0F2238;">Replication Wall</strong>, marked on the map above. It's the point where the business has outgrown what one person can hold. Most owners stall there for years. It's also the most fixable thing in the business once you can see it clearly.</p>
+    <p style="margin:0 0 14px;font-size:15px;line-height:1.6;color:#44566B;">Your biggest leak right now is <strong style="color:#0F2238;">${p.primary_leak || "operational drag"}</strong>, and at your revenue band that's quietly costing an estimated <strong style="color:#A8412A;">${money_(p.cost_low)}-${money_(p.cost_high)} a year</strong> in rework, dropped follow-through, and friction you don't have the bandwidth to chase down.</p>
+    <p style="margin:0 0 8px;font-size:15px;line-height:1.6;color:#44566B;">The gap you're feeling has a name -- the <strong style="color:#0F2238;">Replication Wall</strong>, marked on the map above. It's the point where the business has outgrown what one person can hold. Most owners stall there for years. It's also the most fixable thing in the business once you can see it clearly.</p>
   </td></tr>
   <tr><td style="padding:18px 32px 6px;">
     <p style="margin:0 0 16px;font-size:16px;font-weight:bold;color:#0F2238;">Two ways to go from here:</p>
 
-    <p style="margin:0 0 6px;font-size:15px;color:#0F2238;"><strong>① Start with a conversation</strong> &mdash; <span style="color:#44566B;">free, 30 minutes</span></p>
+    <p style="margin:0 0 6px;font-size:15px;color:#0F2238;"><strong>1) Start with a conversation</strong> -- <span style="color:#44566B;">free, 30 minutes</span></p>
     <p style="margin:0 0 12px;font-size:14px;line-height:1.55;color:#44566B;">Want to talk it through first? We'll look at your result together and the one or two things most worth your attention. No pitch, no pressure.</p>
     <p style="margin:0 0 22px;">${discoveryBtn}</p>
 
-    <p style="margin:0 0 6px;font-size:15px;color:#0F2238;"><strong>② Or skip the warm-up and get to work</strong> &mdash; <span style="color:#44566B;">90-min Friction Diagnostic Session, $3,500</span></p>
-    <p style="margin:0 0 6px;font-size:14px;line-height:1.55;color:#44566B;">Already know your single biggest blocker and ready to do the work? Book the session and we'll cut straight to it. Before we meet, we'll request your materials and the details of your <strong>last 10 deals</strong> — so both of us walk in researched and we spend the 90 minutes on <em>your business</em>, not getting up to speed. You'll leave with the leak named in dollars and a plan your team can run.</p>
+    <p style="margin:0 0 6px;font-size:15px;color:#0F2238;"><strong>2) Or skip the warm-up and get to work</strong> -- <span style="color:#44566B;">90-min Friction Diagnostic Session, $3,500</span></p>
+    <p style="margin:0 0 6px;font-size:14px;line-height:1.55;color:#44566B;">Already know your single biggest blocker and ready to do the work? Book the session and we'll cut straight to it. Before we meet, we'll request your materials and the details of your <strong>last 10 deals</strong> -- so both of us walk in researched and we spend the 90 minutes on <em>your business</em>, not getting up to speed. You'll leave with the leak named in dollars and a plan your team can run.</p>
     <p style="margin:0 0 10px;font-size:13px;color:#7E8A98;font-style:italic;">Best fit if you're $3M+ and already clear on where it hurts.</p>
     <p style="margin:0 0 8px;">${sessionBtn}</p>
   </td></tr>
   <tr><td style="padding:18px 32px 30px;border-top:1px solid #E6ECF2;">
     <p style="margin:14px 0 0;font-size:14px;color:#0F2238;"><strong>Eugene Coleman</strong></p>
-    <p style="margin:2px 0 0;font-size:13px;color:#44566B;">atScale Advisors · Revenue Systems Architect</p>
-    <p style="margin:6px 0 0;font-size:12px;color:#7E8A98;">25+ years inside FedEx, CIGNA, Allstate, Delta, Salesforce, Tealium — same patterns, your scale.</p>
+    <p style="margin:2px 0 0;font-size:13px;color:#44566B;">atScale Advisors | Revenue Systems Architect</p>
+    <p style="margin:6px 0 0;font-size:12px;color:#7E8A98;">25+ years inside FedEx, CIGNA, Allstate, Delta, Salesforce, Tealium -- same patterns, your scale.</p>
   </td></tr>
 </table>
 </td></tr>
@@ -262,38 +262,38 @@ function sendProspectEmail_(p) {
 </body></html>`;
 
   const plain = [
-    `Hi ${first} — here's where you are.`,
+    `Hi ${first} -- here's where you are.`,
     ``,
-    `Your Scale Readiness Score: ${score}/40 — ${tier}`,
+    `Your Scale Readiness Score: ${score}/40 -- ${tier}`,
     ``,
     `What this means: ${tierInfo.means}`,
     ``,
-    `Biggest leak: ${p.primary_leak || "operational drag"} — costing an estimated ${money_(p.cost_low)}–${money_(p.cost_high)}/year.`,
+    `Biggest leak: ${p.primary_leak || "operational drag"} -- costing an estimated ${money_(p.cost_low)}-${money_(p.cost_high)}/year.`,
     ``,
     `Two ways to go from here:`,
     `1) Free Strategy Discovery call (30 min): ${CAL_DISCOVERY}`,
     `2) 90-min Friction Diagnostic Session ($3,500): ${CAL_SESSION}`,
     `   Best fit if you're $3M+ and already clear on where it hurts.`,
     ``,
-    `— Eugene Coleman, atScale Advisors`,
+    `-- Eugene Coleman, atScale Advisors`,
   ].join("\n");
 
   MailApp.sendEmail({
     to: p.p3_email.trim(),
-    subject: `Your Scale Readiness Score: ${score}/40 — here's where you are`,
+    subject: `Your Scale Readiness Score: ${score}/40 -- here's where you are`,
     htmlBody: html,
     body: plain,
     replyTo: NOTIFY_EMAIL,
-    name: "Eugene Coleman — atScale Advisors",
+    name: "Eugene Coleman -- atScale Advisors",
   });
 }
 
 function suggestedNextMove_(p) {
   const stage = p.stage_n || 0;
-  if (stage <= 1) return "Foundation Check-in (20 min) — confirm foundation tier and disqualify if outside ICP.";
-  if (stage === 2) return "Friction Diagnostic Session ($3,500, 90 min) — name the leak in dollars, walk away with 5-page recap.";
-  if (stage === 3) return "Strategy Discovery (30 min) — Revenue Architecture or Foundation Audit fit.";
-  if (stage >= 4) return "Strategy Discovery (30 min) — Embedded Advisory / strategic counsel fit.";
+  if (stage <= 1) return "Foundation Check-in (20 min) -- confirm foundation tier and disqualify if outside ICP.";
+  if (stage === 2) return "Friction Diagnostic Session ($3,500, 90 min) -- name the leak in dollars, walk away with 5-page recap.";
+  if (stage === 3) return "Strategy Discovery (30 min) -- Revenue Architecture or Foundation Audit fit.";
+  if (stage >= 4) return "Strategy Discovery (30 min) -- Embedded Advisory / strategic counsel fit.";
   return "Strategy Discovery (30 min).";
 }
 
