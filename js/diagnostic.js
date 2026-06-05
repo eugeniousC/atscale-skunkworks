@@ -306,12 +306,16 @@ function stageFor(total) {
  * ============================================================ */
 const SRC_TIERS = [
   { band: [10, 19], name: "The Grind",      need: "Foundation work first",
+    oria: "Operations → Replication", foundation: "Survive", wallPos: "approaching the Replication Wall",
     interp: "The business runs on heroics and the founder's bandwidth. The first work is foundation, not growth." },
   { band: [20, 27], name: "The Plateau",    need: "Operational architecture",
+    oria: "Replication (stuck)", foundation: "Systematize", wallPos: "at the Replication Wall",
     interp: "You have systems and dashboards, but the team can't predict outcomes from them. Most $3M-$30M owner-operators stall here — and most never get out without rebuilding the operational architecture." },
   { band: [28, 34], name: "The Inflection", need: "Growth architecture overlay",
+    oria: "Intelligence", foundation: "Scale", wallPos: "just past the Replication Wall",
     interp: "Foundation is honest. The next altitude is building the systems that compound — forecast discipline, decision rights, the architecture that lets the business run without you in every room." },
   { band: [35, 40], name: "The Machine",    need: "Strategic counsel",
+    oria: "Intelligence → Automation", foundation: "Scale", wallPos: "well past the Replication Wall",
     interp: "You're operating ahead of the curve. The remaining work is strategic — the rare exceptions the Phase 2 system isn't built to handle." },
 ];
 
@@ -321,6 +325,27 @@ function srcScore(total) {
 }
 function srcTier(score) {
   return SRC_TIERS.find(t => score >= t.band[0] && score <= t.band[1]) || SRC_TIERS[0];
+}
+
+/* ============================================================
+ * Revenue Signal Map (RSM) — the canonical alignment.
+ * The RIM stage DERIVES from the Scale Readiness tier, so the headline number,
+ * the journey phase (ORIA), the RIM stage, and the cost-of-Wall can never
+ * disagree. Single source of truth: docs/RevenueSignalMap.md.
+ *
+ *   Tier (SRC)        ORIA phase                RIM stage                 Foundation First
+ *   The Grind  10-19  Operations → Replication  1 Reactive Chaos          Survive       (approaching Wall)
+ *   The Plateau 20-27 Replication (stuck)       2 Dashboard Theater       Systematize   (AT the Wall)
+ *   The Inflection 28-34 Intelligence           3 Revenue Operating Sys   Scale         (just past Wall)
+ *   The Machine 35-40 Intelligence → Automation 4-5 Intelligent/Autonomous Scale        (well past Wall)
+ * ============================================================ */
+function stageForSrc(score) {
+  if (typeof score !== "number") return STAGES[0];
+  if (score <= 19) return STAGES[0]; // Grind      → Stage 1 Reactive Chaos
+  if (score <= 27) return STAGES[1]; // Plateau    → Stage 2 Dashboard Theater (the Wall)
+  if (score <= 34) return STAGES[2]; // Inflection → Stage 3 Revenue Operating System
+  if (score <= 39) return STAGES[3]; // Machine    → Stage 4 Intelligent Acceleration
+  return STAGES[4];                  // Machine     → Stage 5 Autonomous Scale
 }
 
 // Reject non-https/mailto URLs to defang any future XSS via a stage CTA that gets parameterized.
@@ -569,7 +594,11 @@ function computeScore() {
   const primary = tieOrder
     .map(k => dims.find(d => d.key === k && d.score === min))
     .find(Boolean) || dims.find(d => d.score === min);
-  const stage = stageFor(total);
+  // Revenue Signal Map: the score drives the tier, the tier drives the stage —
+  // so the headline number, the journey phase, the RIM stage, and the cost all agree.
+  const src = srcScore(total);
+  const tier = srcTier(src);
+  const stage = stageForSrc(src);
 
   // Cost-of-Wall ± 20%
   const band = REVENUE_BANDS.find(b => b.label === a.p5);
@@ -577,10 +606,6 @@ function computeScore() {
   const central = midpoint * stage.leakageMid;
   const low = Math.round(central * 0.8 / 1000) * 1000;
   const high = Math.round(central * 1.2 / 1000) * 1000;
-
-  // Scale Readiness Score™ — the headline, branded view
-  const src = srcScore(total);
-  const tier = srcTier(src);
 
   return { total, dims, primary, stage, costLow: low, costHigh: high, revenueBandLabel: a.p5, src, tier };
 }
@@ -624,14 +649,20 @@ function renderResults() {
 
       <p class="diag-tier-interp">${escape(r.tier.interp)}</p>
 
-      <!-- SECONDARY: RI Maturity Curve stage + cost of the Wall -->
-      <div class="diag-secondary">
-        <p class="muted" style="font-family: var(--font-mono); font-size: 0.8rem; margin:0; letter-spacing: 0.06em;">REVENUE INTELLIGENCE MATURITY CURVE&trade;</p>
-        <p class="diag-stage-line">Stage ${r.stage.n} of 5 &mdash; <strong>${escape(r.stage.name)}</strong></p>
-        <p class="diag-stage-tag">&ldquo;${escape(r.stage.tag)}&rdquo;</p>
-        <p class="muted" style="margin: var(--gap-sm) 0 0;">Estimated annual cost of the Wall</p>
-        <p class="diag-cost">${fmtMoney(r.costLow)} – ${fmtMoney(r.costHigh)}</p>
-        <p class="muted" style="font-size: 0.85rem;">Based on Stage ${r.stage.n} leakage applied to your revenue band (${escape(r.revenueBandLabel || "—")}).</p>
+      <!-- REVENUE SIGNAL MAP — one coherent strip: tier → journey phase → RIM stage → plan -->
+      <div class="diag-rsm">
+        <p class="diag-rsm-label">Your Revenue Signal Map</p>
+        <div class="diag-rsm-grid">
+          <div class="diag-rsm-cell"><span class="k">Tier</span><span class="v">${escape(r.tier.name)}</span></div>
+          <div class="diag-rsm-cell"><span class="k">Journey · ORIA</span><span class="v">${escape(r.tier.oria)}</span><span class="note">${escape(r.tier.wallPos)}</span></div>
+          <div class="diag-rsm-cell"><span class="k">RIM Stage</span><span class="v">${r.stage.n} / 5 · ${escape(r.stage.name)}</span></div>
+          <div class="diag-rsm-cell"><span class="k">Foundation First</span><span class="v">${escape(r.tier.foundation)}</span><span class="note">your get-well starting point</span></div>
+        </div>
+        <div class="diag-rsm-cost">
+          <span class="diag-rsm-cost-label">Estimated annual cost of the Wall</span>
+          <span class="diag-cost">${fmtMoney(r.costLow)} – ${fmtMoney(r.costHigh)}</span>
+          <span class="muted" style="font-size: 0.82rem;">Based on Stage ${r.stage.n} leakage applied to your revenue band (${escape(r.revenueBandLabel || "—")}).</span>
+        </div>
       </div>
 
       ${wallCallout}
