@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Page not found &mdash; atScale Advisors</title>
   <meta name="description" content="The page you were looking for moved or never existed. Here's where to go next." />
-  <meta name="theme-color" content="#0F2238" />
+  <meta name="theme-color" content="#0F1318" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/styles.css" />
+  <script src="js/reveal.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -30,9 +31,10 @@
   <main>
     <section class="hero">
       <div class="container">
+        <p class="hero-kicker" data-reveal>404 · Not found</p>
         <p class="muted" style="font-family: var(--font-mono); font-size: 0.85rem;">HTTP 404</p>
-        <h1>That page doesn&rsquo;t exist (yet).</h1>
-        <p class="lede">No drama. Try one of these instead:</p>
+        <h1 data-reveal data-delay="1">That page doesn&rsquo;t exist (yet).</h1>
+        <p class="lede" data-reveal data-delay="2">No drama. Try one of these instead:</p>
         <div class="btn-row">
           <a class="btn" href="diagnostic.html">Take the Diagnostic &rarr;</a>
           <a class="btn-text" href="index.html">Back to home &rarr;</a>
@@ -42,14 +44,14 @@
 
     <section>
       <div class="container">
-        <h2>Where you might be headed</h2>
+        <h2 data-reveal>Where you might be headed</h2>
         <ul>
-          <li><a href="frameworks.html">Frameworks</a> &mdash; the Replication Wall, the Diagnostic, Foundation First, the sequencing rule</li>
-          <li><a href="services.html">Services</a> &mdash; five engagement rungs with transparent pricing</li>
-          <li><a href="about.html">About</a> &mdash; Eugene's bio + numbers</li>
-          <li><a href="contact.html">Contact</a> &mdash; intent-routed inquiry paths</li>
+          <li data-reveal data-delay="1"><a href="frameworks.html">Frameworks</a> &mdash; the Replication Wall, the Diagnostic, Foundation First, the sequencing rule</li>
+          <li data-reveal data-delay="2"><a href="services.html">Services</a> &mdash; five engagement rungs with transparent pricing</li>
+          <li data-reveal data-delay="3"><a href="about.html">About</a> &mdash; Eugene's bio + numbers</li>
+          <li data-reveal data-delay="4"><a href="contact.html">Contact</a> &mdash; intent-routed inquiry paths</li>
         </ul>
-        <p>Or just email <a href="mailto:eugene@atscale-advisors.com">eugene@atscale-advisors.com</a> with what you were trying to find &mdash; Eugene reads every email.</p>
+        <p data-reveal data-delay="5">Or just email <a href="mailto:eugene@atscale-advisors.com">eugene@atscale-advisors.com</a> with what you were trying to find &mdash; Eugene reads every email.</p>
       </div>
     </section>
   </main>
