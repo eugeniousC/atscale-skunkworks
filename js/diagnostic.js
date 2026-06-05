@@ -683,7 +683,7 @@ function renderResults() {
         <p><a class="btn" href="${escape(safeUrl(STRATEGY_DISCOVERY_URL))}" target="_blank" rel="noopener noreferrer">Book a Strategy Discovery call &rarr;</a></p>
         ${r.stage.cta.alt ? `
         <hr style="border-top: 1px solid var(--blueprint-line); margin: var(--gap-md) 0;">
-        <p class="muted" style="font-size: 0.9rem;">Or, based on your stage, the most efficient next move:</p>
+        <p class="muted" style="font-size: 0.9rem;">Already know you want the deep dive? No call required &mdash; you can skip ahead:</p>
         <p><strong>${escape(r.stage.cta.label)}.</strong> ${escape(r.stage.cta.lead)}</p>
         <p><a class="btn-text" href="${escape(safeUrl(r.stage.cta.url))}" target="_blank" rel="noopener noreferrer">${escape(r.stage.cta.label)} &rarr;</a></p>
         ` : ""}
