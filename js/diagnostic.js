@@ -241,6 +241,11 @@ const STAGES = [
       label: "Book a Friction Diagnostic Session — $3,500",
       url: FRICTION_SESSION_URL,
       lead: "Name the leak. A 90-minute Friction Diagnostic Session walks you out with a written 5-page recap, the specific leak named in dollars, and the Foundation First next move.",
+      // alt:true → surface as a second CTA below Strategy Discovery. Only the PAID, direct-to-
+      // engagement move earns this (Plateau's $3,500 session). Free-call alternatives (e.g. the
+      // Grind's Foundation Check-in) would just be a redundant second "book a free call" — so they
+      // are NOT flagged, and the single Strategy Discovery CTA stands alone.
+      alt: true,
     },
     interp: "Dashboard Theater means the data and tools are in place, but the team can't yet predict outcomes from them. Most $3M–$30M owner-operators stall here. The gap between Stage 2 and Stage 3 is the Replication Wall — the business has outgrown what one person can hold, and working harder doesn't get you across it.",
   },
@@ -676,7 +681,7 @@ function renderResults() {
         <h3>Where to go next</h3>
         <p><strong>Start with a Strategy Discovery call.</strong> 30 minutes, free. No commitment, no pitch. We talk through your score, you decide whether the next step makes sense.</p>
         <p><a class="btn" href="${escape(safeUrl(STRATEGY_DISCOVERY_URL))}" target="_blank" rel="noopener noreferrer">Book a Strategy Discovery call &rarr;</a></p>
-        ${r.stage.cta.url !== STRATEGY_DISCOVERY_URL ? `
+        ${r.stage.cta.alt ? `
         <hr style="border-top: 1px solid var(--blueprint-line); margin: var(--gap-md) 0;">
         <p class="muted" style="font-size: 0.9rem;">Or, based on your stage, the most efficient next move:</p>
         <p><strong>${escape(r.stage.cta.label)}.</strong> ${escape(r.stage.cta.lead)}</p>
