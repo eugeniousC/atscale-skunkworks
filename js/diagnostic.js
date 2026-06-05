@@ -400,7 +400,9 @@ function renderProgress() {
   progress().hidden = false;
   const idx = answeredStepIndex();
   const total = ANSWERABLE.length;
-  const pct = Math.round((idx / total) * 100);
+  // Count the current screen as in-progress so the final screen (q12) reads 100%,
+  // not (total-1)/total = 94%. First screen starts at a small head-start, never 0%.
+  const pct = Math.round(((idx + 1) / total) * 100);
   fill().style.width = pct + "%";
   // Label distinguishes the 4 profile screens ("About you") from the 12 scored
   // questions ("Question N of 12") so the counter always matches the public "12 questions".
@@ -638,8 +640,6 @@ function renderResults() {
       <div class="diag-bars">${bars}</div>
 
       <p class="muted" style="font-size: 0.85rem;">${escape(r.stage.interp)}</p>
-
-      ${r.stage.n <= 2 ? `<img class="diag-wall-img" src="assets/replicationWall.png" alt="The Replication Wall — a structural barrier between hustle-led growth and systems-led scale.">` : ""}
 
       <div class="diag-cta-block">
         <h3>Where to go next</h3>
