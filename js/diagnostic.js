@@ -639,7 +639,7 @@ function renderResults() {
 
       <p class="muted" style="font-size: 0.85rem;">${escape(r.stage.interp)}</p>
 
-      ${r.stage.n <= 2 ? `<img class="diag-wall-img" src="/assets/replicationWall.png" alt="The Replication Wall — a structural barrier between hustle-led growth and systems-led scale.">` : ""}
+      ${r.stage.n <= 2 ? `<img class="diag-wall-img" src="assets/replicationWall.png" alt="The Replication Wall — a structural barrier between hustle-led growth and systems-led scale.">` : ""}
 
       <div class="diag-cta-block">
         <h3>Where to go next</h3>
@@ -654,7 +654,7 @@ function renderResults() {
       </div>
 
       <p class="muted" style="margin-top: var(--gap-md); font-size: 0.85rem;">A copy of these results is being emailed to ${escape(state.answers.p3 || "you")}. Eugene reads every submission himself; expect a personal follow-up within 24 hours.</p>
-      <p style="margin-top: var(--gap-md);"><a class="btn-text" href="/" id="btn-home">Back to home &rarr;</a></p>
+      <p style="margin-top: var(--gap-md);"><a class="btn-text" href="" id="btn-home">Back to home &rarr;</a></p>
     </div>
   `;
 }
