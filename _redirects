@@ -1,0 +1,10 @@
+# Cloudflare Pages redirects. Lock down internal/non-web paths so the marketing
+# site never serves build docs, session logs, or backend source. These files are
+# removed from the deploy; this 301s any bookmarked/cached path to the homepage.
+/docs/*                /   301
+/apps-script/*         /   301
+/tools/*               /   301
+/ISA.md                /   301
+/RESUME_HERE.md        /   301
+/WAKEUP-CHECKLIST.md   /   301
+/README.md             /   301
