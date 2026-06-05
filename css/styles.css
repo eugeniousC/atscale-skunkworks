@@ -834,6 +834,11 @@ html.js [data-reveal][data-delay="5"] { transition-delay: 0.35s; }
 .hero-visual.in .wall-diagram .fade { animation: wall-fade 0.7s ease forwards 1.2s; }
 @keyframes wall-fade { to { opacity: 1; } }
 
+/* Ascending-bars hero — bars grow up from the baseline, staggered */
+.wall-diagram .gbar { transform: scaleY(0); transform-origin: bottom; transform-box: fill-box; }
+.hero-visual.in .wall-diagram .gbar { animation: gbar-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+@keyframes gbar-rise { to { transform: scaleY(1); } }
+
 /* ---------- Stat / proof band ---------- */
 .statband { background: var(--bg-deep); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0; }
 .statband .container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding-top: 0; padding-bottom: 0; }
@@ -967,6 +972,7 @@ html.js [data-reveal][data-delay="5"] { transition-delay: 0.35s; }
   html.js [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
   .wall-diagram .draw { stroke-dashoffset: 0 !important; animation: none !important; }
   .wall-diagram .fade { opacity: 1 !important; animation: none !important; }
+  .wall-diagram .gbar { transform: none !important; animation: none !important; }
   .btn, .step, .friction { transition: none !important; }
 }
 

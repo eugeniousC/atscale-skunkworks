@@ -50,27 +50,30 @@
           </div>
 
           <div class="hero-visual" data-reveal>
-            <svg class="wall-diagram" viewBox="0 0 480 400" role="img" aria-label="A growth curve rising steeply on hustle, then flattening against the Replication Wall. A dashed line shows the higher trajectory unlocked when the business runs on systems instead of the owner.">
+            <svg class="wall-diagram" viewBox="0 0 480 400" role="img" aria-label="Bars showing revenue climbing on hustle, then plateauing against the Replication Wall. A dashed rust outline marks the leak — growth lost to founder-dependency — and a dashed line shows the higher trajectory unlocked when the business runs on systems.">
               <!-- axes -->
               <path class="fade" d="M 52 28 L 52 356 L 456 356" fill="none" stroke="var(--border-bright)" stroke-width="1.5" />
               <!-- faint gridlines -->
               <line class="fade" x1="52" y1="120" x2="456" y2="120" stroke="var(--border)" stroke-width="1" />
               <line class="fade" x1="52" y1="240" x2="456" y2="240" stroke="var(--border)" stroke-width="1" />
+              <!-- ascending bars, plateauing before the Wall -->
+              <rect class="gbar" x="70"  y="300" width="26" height="56"  rx="2" fill="var(--bronze)" opacity="0.88" style="animation-delay:0s;" />
+              <rect class="gbar" x="108" y="268" width="26" height="88"  rx="2" fill="var(--bronze)" opacity="0.9"  style="animation-delay:0.08s;" />
+              <rect class="gbar" x="146" y="232" width="26" height="124" rx="2" fill="var(--bronze)" opacity="0.94" style="animation-delay:0.16s;" />
+              <rect class="gbar" x="184" y="196" width="26" height="160" rx="2" fill="var(--bronze)" style="animation-delay:0.24s;" />
+              <rect class="gbar" x="222" y="168" width="26" height="188" rx="2" fill="var(--bronze)" style="animation-delay:0.32s;" />
+              <rect class="gbar" x="260" y="168" width="26" height="188" rx="2" fill="var(--bronze)" style="animation-delay:0.4s;" />
+              <rect class="gbar" x="298" y="168" width="26" height="188" rx="2" fill="var(--bronze)" style="animation-delay:0.48s;" />
+              <!-- the leak: dashed rust outline of the height lost at the plateau -->
+              <rect class="fade" x="298" y="96" width="26" height="72" rx="2" fill="none" stroke="var(--leak-rust)" stroke-width="2" stroke-dasharray="4 4" />
               <!-- the Wall -->
-              <line class="fade" x1="316" y1="64" x2="316" y2="356" stroke="var(--ink)" stroke-width="2" stroke-dasharray="2 6" opacity="0.55" />
+              <line class="fade" x1="338" y1="64" x2="338" y2="356" stroke="var(--ink)" stroke-width="2" stroke-dasharray="2 6" opacity="0.55" />
               <!-- aspirational: with systems (draws last) -->
-              <path class="draw draw-3" pathLength="1" d="M 244 178 C 300 150, 380 96, 452 56" fill="none" stroke="var(--bronze-text)" stroke-width="2" stroke-dasharray="6 6" stroke-linecap="round" />
-              <!-- the leak: gap between plateau and potential -->
-              <line class="fade" x1="316" y1="108" x2="316" y2="64" stroke="var(--leak-rust)" stroke-width="2.5" stroke-dasharray="3 4" />
-              <!-- hustle growth curve, flattening into the Wall (draws first) -->
-              <path class="draw" pathLength="1" d="M 52 340 C 150 326, 214 256, 252 184 C 282 128, 300 110, 316 108" fill="none" stroke="var(--bronze)" stroke-width="3" stroke-linecap="round" style="filter: drop-shadow(0 0 6px rgba(200,137,59,0.45));" />
-              <!-- markers -->
-              <circle class="fade" cx="316" cy="108" r="5" fill="var(--bronze)" />
-              <circle class="fade" cx="52" cy="340" r="3.5" fill="var(--slate)" />
+              <path class="draw draw-3" pathLength="1" d="M 235 162 C 300 128, 384 84, 452 50" fill="none" stroke="var(--bronze-text)" stroke-width="2" stroke-dasharray="6 6" stroke-linecap="round" />
               <!-- labels -->
-              <text class="fade" x="322" y="80" font-family="var(--font-mono)" font-size="11" letter-spacing="1.5" fill="var(--ink)" opacity="0.85">THE WALL</text>
-              <text class="fade" x="330" y="92" font-family="var(--font-mono)" font-size="10" letter-spacing="0.5" fill="var(--bronze-text)">with systems &rarr;</text>
-              <text class="fade" x="322" y="132" font-family="var(--font-mono)" font-size="10" fill="var(--leak-rust)">the leak</text>
+              <text class="fade" x="344" y="84" font-family="var(--font-mono)" font-size="11" letter-spacing="1.5" fill="var(--ink)" opacity="0.85">THE WALL</text>
+              <text class="fade" x="360" y="70" font-family="var(--font-mono)" font-size="10" letter-spacing="0.5" fill="var(--bronze-text)">with systems &rarr;</text>
+              <text class="fade" x="292" y="88" font-family="var(--font-mono)" font-size="10" fill="var(--leak-rust)" text-anchor="end">the leak</text>
               <text class="fade" x="44" y="24" font-family="var(--font-mono)" font-size="10" fill="var(--slate)" text-anchor="end" transform="rotate(-90 44 24)" style="transform-box: fill-box;">GROWTH</text>
               <text class="fade" x="452" y="374" font-family="var(--font-mono)" font-size="10" fill="var(--slate)" text-anchor="end">EFFORT / TIME &rarr;</text>
             </svg>
