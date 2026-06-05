@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>atScale Advisors — Get your business off your back</title>
   <meta name="description" content="If every deal runs through you and the team can't move without you, you've hit the Replication Wall. A free 15-minute diagnostic names what's keeping your $3M–$30M business dependent on you — and the path out." />
-  <meta name="theme-color" content="#0F2238" />
+  <meta name="theme-color" content="#0F1318" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/styles.css" />
+  <!-- No defer: sets html.js before first paint so reveals don't flash. CSP-safe (script-src 'self'). -->
+  <script src="js/reveal.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -30,105 +32,173 @@
   <main>
     <section class="hero">
       <div class="container">
-        <h1>You're working harder every quarter just to grow a little.</h1>
-        <p class="lede">
-          <strong>Every deal still runs through you. The team can&rsquo;t move on the big calls without you in the room. You didn&rsquo;t build a company that scales &mdash; you built one that depends on you.</strong>
-        </p>
-        <p class="lede">
-          That&rsquo;s the <strong>Replication Wall&trade;</strong>. No amount of hustle gets you over it &mdash; and AI only scales the chaos faster.
-        </p>
-        <div class="btn-row">
-          <a class="btn" href="diagnostic.html">Take the Diagnostic &rarr;</a>
-          <a class="btn-text" href="frameworks.html">Read the frameworks &rarr;</a>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="hero-kicker" data-reveal>Revenue Systems Architect</p>
+            <h1 data-reveal data-delay="1">You're working harder every quarter just to grow a little.</h1>
+            <p class="lede" data-reveal data-delay="2">
+              <strong>Every deal still runs through you. The team can&rsquo;t move on the big calls without you in the room. You didn&rsquo;t build a company that scales &mdash; you built one that depends on you.</strong>
+            </p>
+            <p class="lede" data-reveal data-delay="3">
+              That&rsquo;s the <strong>Replication Wall&trade;</strong>. No amount of hustle gets you over it &mdash; and AI only scales the chaos faster.
+            </p>
+            <div class="btn-row" data-reveal data-delay="4">
+              <a class="btn" href="diagnostic.html">Take the Diagnostic &rarr;</a>
+              <a class="btn-text" href="frameworks.html">Read the frameworks &rarr;</a>
+            </div>
+            <p class="muted" data-reveal data-delay="5" style="margin-top: var(--gap-md); font-size: 0.9rem;">15 min &middot; free &middot; no call required</p>
+          </div>
+
+          <div class="hero-visual" data-reveal>
+            <svg class="wall-diagram" viewBox="0 0 480 400" role="img" aria-label="A growth curve rising steeply on hustle, then flattening against the Replication Wall. A dashed line shows the higher trajectory unlocked when the business runs on systems instead of the owner.">
+              <!-- axes -->
+              <path class="fade" d="M 52 28 L 52 356 L 456 356" fill="none" stroke="var(--border-bright)" stroke-width="1.5" />
+              <!-- faint gridlines -->
+              <line class="fade" x1="52" y1="120" x2="456" y2="120" stroke="var(--border)" stroke-width="1" />
+              <line class="fade" x1="52" y1="240" x2="456" y2="240" stroke="var(--border)" stroke-width="1" />
+              <!-- the Wall -->
+              <line class="fade" x1="316" y1="64" x2="316" y2="356" stroke="var(--ink)" stroke-width="2" stroke-dasharray="2 6" opacity="0.55" />
+              <!-- aspirational: with systems (draws last) -->
+              <path class="draw draw-3" pathLength="1" d="M 244 178 C 300 150, 380 96, 452 56" fill="none" stroke="var(--bronze-text)" stroke-width="2" stroke-dasharray="6 6" stroke-linecap="round" />
+              <!-- the leak: gap between plateau and potential -->
+              <line class="fade" x1="316" y1="108" x2="316" y2="64" stroke="var(--leak-rust)" stroke-width="2.5" stroke-dasharray="3 4" />
+              <!-- hustle growth curve, flattening into the Wall (draws first) -->
+              <path class="draw" pathLength="1" d="M 52 340 C 150 326, 214 256, 252 184 C 282 128, 300 110, 316 108" fill="none" stroke="var(--bronze)" stroke-width="3" stroke-linecap="round" style="filter: drop-shadow(0 0 6px rgba(200,137,59,0.45));" />
+              <!-- markers -->
+              <circle class="fade" cx="316" cy="108" r="5" fill="var(--bronze)" />
+              <circle class="fade" cx="52" cy="340" r="3.5" fill="var(--slate)" />
+              <!-- labels -->
+              <text class="fade" x="322" y="80" font-family="var(--font-mono)" font-size="11" letter-spacing="1.5" fill="var(--ink)" opacity="0.85">THE WALL</text>
+              <text class="fade" x="330" y="92" font-family="var(--font-mono)" font-size="10" letter-spacing="0.5" fill="var(--bronze-text)">with systems &rarr;</text>
+              <text class="fade" x="322" y="132" font-family="var(--font-mono)" font-size="10" fill="var(--leak-rust)">the leak</text>
+              <text class="fade" x="44" y="24" font-family="var(--font-mono)" font-size="10" fill="var(--slate)" text-anchor="end" transform="rotate(-90 44 24)" style="transform-box: fill-box;">GROWTH</text>
+              <text class="fade" x="452" y="374" font-family="var(--font-mono)" font-size="10" fill="var(--slate)" text-anchor="end">EFFORT / TIME &rarr;</text>
+            </svg>
+          </div>
         </div>
-        <p class="muted" style="margin-top: var(--gap-md); font-size: 0.9rem;">15 min &middot; free &middot; no call required</p>
+      </div>
+    </section>
+
+    <section class="statband" aria-label="Track record">
+      <div class="container">
+        <div class="stat" data-reveal data-delay="1">
+          <div class="num"><span data-count="154" data-prefix="$" data-suffix="M">$154M</span></div>
+          <div class="lbl">ARR Driven</div>
+        </div>
+        <div class="stat" data-reveal data-delay="2">
+          <div class="num"><span data-count="63" data-prefix="$" data-suffix="M+">$63M+</span></div>
+          <div class="lbl">Direct Sales</div>
+        </div>
+        <div class="stat" data-reveal data-delay="3">
+          <div class="num"><span data-count="25" data-suffix="+">25+</span></div>
+          <div class="lbl">Years Operating</div>
+        </div>
+        <div class="stat" data-reveal data-delay="4">
+          <div class="num"><span data-count="1" data-prefix="$" data-suffix="M+">$1M+</span></div>
+          <div class="lbl">Unlocked in &lt;60 Days</div>
+        </div>
       </div>
     </section>
 
     <section class="alt">
       <div class="container">
-        <h2>You're not imagining it.</h2>
-        <p>If you&rsquo;re running a <strong>$3M&ndash;$30M book of business</strong> &mdash; across professional services or trades &mdash; you probably recognize at least three of these:</p>
-        <ul class="pain-list">
-          <li>The pipeline is healthy. The margin isn&rsquo;t following.</li>
-          <li>Every quarter requires a miracle to hit the number.</li>
-          <li>The team can&rsquo;t move on the big stuff without you in the room.</li>
-          <li><em>&ldquo;We had a great quarter &mdash; and I have no idea why.&rdquo;</em></li>
-          <li>The AI tools that were supposed to save labor have created new chaos.</li>
-          <li>You can&rsquo;t take two weeks off without coming back to fires.</li>
-        </ul>
-        <p>That&rsquo;s not a hiring problem. It&rsquo;s not a market problem. It&rsquo;s not a <em>&ldquo;we need better dashboards&rdquo;</em> problem.</p>
-        <p>It&rsquo;s the <strong>Replication Wall</strong> &mdash; and hustle only makes it taller.</p>
+        <p class="eyebrow" data-reveal>You're not imagining it</p>
+        <h2 data-reveal style="margin-top:0;">The signals you keep explaining away.</h2>
+        <p data-reveal>If you&rsquo;re running a <strong>$3M&ndash;$30M book of business</strong> &mdash; across professional services or trades &mdash; you probably recognize at least three of these:</p>
+        <div class="friction-grid">
+          <div class="friction" data-reveal data-delay="1"><span class="mk">01</span><p>The pipeline is healthy. The margin isn&rsquo;t following.</p></div>
+          <div class="friction" data-reveal data-delay="2"><span class="mk">02</span><p>Every quarter requires a miracle to hit the number.</p></div>
+          <div class="friction" data-reveal data-delay="3"><span class="mk">03</span><p>The team can&rsquo;t move on the big stuff without you in the room.</p></div>
+          <div class="friction" data-reveal data-delay="1"><span class="mk">04</span><p><em>&ldquo;We had a great quarter &mdash; and I have no idea why.&rdquo;</em></p></div>
+          <div class="friction" data-reveal data-delay="2"><span class="mk">05</span><p>The AI tools that were supposed to save labor created new chaos.</p></div>
+          <div class="friction" data-reveal data-delay="3"><span class="mk">06</span><p>You can&rsquo;t take two weeks off without coming back to fires.</p></div>
+        </div>
+        <p data-reveal style="margin-top: var(--gap-lg);">That&rsquo;s not a hiring problem. It&rsquo;s not a market problem. It&rsquo;s not a <em>&ldquo;we need better dashboards&rdquo;</em> problem.</p>
+        <p data-reveal>It&rsquo;s the <strong>Replication Wall</strong> &mdash; and hustle only makes it taller.</p>
       </div>
     </section>
 
     <section class="blueprint">
       <div class="container">
-        <h2>The Replication Wall&trade;</h2>
-        <p>You scaled on hustle &mdash; your judgment, your relationships, your willingness to touch everything. It worked. It&rsquo;s also the ceiling.</p>
-        <p>The Replication Wall is the point where the business can&rsquo;t grow without more of <em>you</em> &mdash; and there isn&rsquo;t more of you. Every deal needs your sign-off. Every big call waits for you. The team executes, but they can&rsquo;t <em>own</em>. So you work harder, and growth barely moves.</p>
-        <p>It&rsquo;s not a hiring problem or a market problem. It&rsquo;s structural: the business runs on you instead of on systems. And it carries a price &mdash; in most owner-led businesses this size, <span class="figure">15&ndash;30% of revenue</span> quietly leaks to the rework, dropped follow-through, and friction that founder-dependency creates. Owners feel it as exhaustion and blame the pipeline, the team, the economy.</p>
-        <p><strong>You can&rsquo;t fix what you can&rsquo;t name.</strong> The first step is seeing exactly where the Wall sits in your business.</p>
-        <p><a class="btn" href="diagnostic.html">Take the Growth Friction Diagnostic &rarr;</a></p>
+        <div class="wall-feature">
+          <div class="wall-copy">
+            <p class="eyebrow" data-reveal>The structural ceiling</p>
+            <h2 data-reveal style="margin-top:0;">The Replication Wall&trade;</h2>
+            <p data-reveal>You scaled on hustle &mdash; your judgment, your relationships, your willingness to touch everything. It worked. It&rsquo;s also the ceiling.</p>
+            <p data-reveal>The Wall is the point where the business can&rsquo;t grow without more of <em>you</em> &mdash; and there isn&rsquo;t more of you. Every deal needs your sign-off. Every big call waits for you. The team executes, but they can&rsquo;t <em>own</em>. So you work harder, and growth barely moves.</p>
+            <p data-reveal><strong>You can&rsquo;t fix what you can&rsquo;t name.</strong> The first step is seeing exactly where the Wall sits in your business.</p>
+            <p data-reveal><a class="btn" href="diagnostic.html">Take the Growth Friction Diagnostic &rarr;</a></p>
+          </div>
+          <div class="wall-figure" data-reveal data-delay="2">
+            <div class="card" style="text-align:center; padding: var(--gap-xl) var(--gap-md); margin:0;">
+              <span class="wall-leak"><span data-count="15" data-suffix="">15</span>&ndash;<span data-count="30" data-suffix="%">30%</span></span>
+              <span class="wall-leak-cap">of revenue quietly leaks</span>
+              <p style="margin: var(--gap-md) 0 0; color: var(--body); font-size: 0.98rem;">In most owner-led businesses this size, that&rsquo;s what founder-dependency costs &mdash; in rework, dropped follow-through, and friction. Owners feel it as exhaustion and blame the pipeline.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="alt">
+    <section>
       <div class="container">
-        <h2>How it works</h2>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap: var(--gap-md);">
-          <div>
-            <h3>1. Take the Diagnostic.</h3>
+        <p class="eyebrow" data-reveal>How it works</p>
+        <h2 data-reveal style="margin-top:0;">Three steps. Fifteen minutes to the first one.</h2>
+        <div class="steps">
+          <div class="step" data-reveal data-delay="1">
+            <div class="step-num">1</div>
+            <h3>Take the Diagnostic.</h3>
             <p>15 minutes. Free. Names your leak in dollars and stages your business on the Foundation First&trade; curve.</p>
           </div>
-          <div>
-            <h3>2. Get the readout.</h3>
+          <div class="step" data-reveal data-delay="2">
+            <div class="step-num">2</div>
+            <h3>Get the readout.</h3>
             <p>Your score, your primary leak zone, your estimated annual cost of the Wall (in dollars), and the recommended next move.</p>
           </div>
-          <div>
-            <h3>3. Choose how deep to go.</h3>
+          <div class="step" data-reveal data-delay="3">
+            <div class="step-num">3</div>
+            <h3>Choose how deep to go.</h3>
             <p>From a 90-minute Friction Diagnostic Session ($3,500) to a 3-week Foundation Audit ($9,500) to an 8-week Revenue Architecture engagement ($28,000). Most owner-operators start at the bottom rung and earn their way up.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section>
+    <section class="alt">
       <div class="container">
-        <h2>Who this is for</h2>
-        <p>Owner-operators running a <strong>$3M&ndash;$30M book of business</strong> in professional services or trades. Consulting and advisory practices. Specialty contractors (HVAC, electrical, plumbing, roofing). General contractors. Field-service operators (pest control, landscaping, commercial cleaning). Niche manufacturers. Agencies. Anyone whose growth has started running through them personally.</p>
-        <p>The Plateau buyer. The one whose pipeline is full but profit isn&rsquo;t, whose team is in place but predictions aren&rsquo;t.</p>
-        <p>If you&rsquo;re outside that band, in a different industry, or simply not feeling the friction yet &mdash; the <a href="frameworks.html">frameworks page</a> is worth reading anyway. You&rsquo;ll find the model and the language. When you&rsquo;re ready, the diagnostic is waiting.</p>
+        <p class="eyebrow" data-reveal>Who this is for</p>
+        <h2 data-reveal style="margin-top:0;">The Plateau buyer.</h2>
+        <p data-reveal>Owner-operators running a <strong>$3M&ndash;$30M book of business</strong> in professional services or trades. Consulting and advisory practices. Specialty contractors (HVAC, electrical, plumbing, roofing). General contractors. Field-service operators (pest control, landscaping, commercial cleaning). Niche manufacturers. Agencies. Anyone whose growth has started running through them personally.</p>
+        <p data-reveal>The one whose pipeline is full but profit isn&rsquo;t, whose team is in place but predictions aren&rsquo;t.</p>
+        <p data-reveal>If you&rsquo;re outside that band, in a different industry, or simply not feeling the friction yet &mdash; the <a href="frameworks.html">frameworks page</a> is worth reading anyway. You&rsquo;ll find the model and the language. When you&rsquo;re ready, the diagnostic is waiting.</p>
       </div>
     </section>
 
     <section>
       <div class="container">
-        <h2>Who&rsquo;s behind atScale</h2>
-        <p><strong>Eugene Coleman.</strong> 25+ years inside the machine at FedEx, CIGNA, Allstate, Caesars, MGM, Delta, Salesforce, MuleSoft, TIBCO, and Tealium &mdash; building revenue systems, fixing broken ones, and watching what happens when growth outruns the foundation underneath it.</p>
-        <p><span class="figure">$154M in ARR driven.</span> <span class="figure">$63M+ in direct sales.</span> <span class="figure">$1M+ in trapped revenue</span> unlocked in under 60 days &mdash; twice. Now applying the same patterns to owner-operated businesses, where the leverage is highest.</p>
-        <p><a class="btn-text" href="about.html">More about Eugene &rarr;</a></p>
+        <p class="eyebrow" data-reveal>Who's behind atScale</p>
+        <h2 data-reveal style="margin-top:0;">Eugene Coleman.</h2>
+        <p data-reveal>25+ years inside the machine at FedEx, CIGNA, Allstate, Caesars, MGM, Delta, Salesforce, MuleSoft, TIBCO, and Tealium &mdash; building revenue systems, fixing broken ones, and watching what happens when growth outruns the foundation underneath it.</p>
+        <p data-reveal>The numbers above aren&rsquo;t theory &mdash; they&rsquo;re the same patterns, now pointed at owner-operated businesses where the leverage is highest.</p>
+        <p data-reveal><a class="btn-text" href="about.html">More about Eugene &rarr;</a></p>
       </div>
     </section>
 
     <section class="dark">
       <div class="container-narrow">
-        <h2 style="margin-top:0;">What clients say</h2>
-        <blockquote style="color: var(--ink); border-left-color: var(--bronze);">
-          &ldquo;With 3 days of effort, Eugene helped us save over 550 hours a year.&rdquo;
-          <footer style="margin-top: var(--gap-sm); font-style: normal; color: var(--slate);">
-            &mdash; <strong style="color: var(--ink);">Michael B.</strong>, CEO of Reliable Sanitation
-          </footer>
-        </blockquote>
+        <p class="eyebrow" data-reveal>What clients say</p>
+        <div class="quote-card" data-reveal data-delay="1">
+          <p>With 3 days of effort, Eugene helped us save over 550 hours a year.</p>
+          <div class="by">&mdash; <strong>Michael B.</strong>, CEO of Reliable Sanitation</div>
+        </div>
       </div>
     </section>
 
-    <section class="blueprint">
-      <div class="container-narrow" style="text-align:center;">
-        <h2 style="margin-top:0;">Start here</h2>
-        <p>You can&rsquo;t fix what you can&rsquo;t name. The first step is the diagnostic.</p>
-        <p>15 minutes. Free. No call required.</p>
-        <p><a class="btn" href="diagnostic.html">Take the Growth Friction Diagnostic &rarr;</a></p>
+    <section class="cta-band">
+      <div class="container-narrow">
+        <h2 data-reveal>You can't fix what you can't name.</h2>
+        <p data-reveal data-delay="1">The first step is the diagnostic. 15 minutes. Free. No call required.</p>
+        <p data-reveal data-delay="2"><a class="btn" href="diagnostic.html">Take the Growth Friction Diagnostic &rarr;</a></p>
       </div>
     </section>
   </main>
