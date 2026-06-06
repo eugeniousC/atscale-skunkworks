@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/styles.css" />
+  <script src="js/track.js" defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -40,8 +41,15 @@
       <div id="diag-stage" class="diag-card" aria-live="polite" aria-atomic="true" tabindex="-1">
         <!-- initial loading state, replaced by JS -->
         <h2>Growth Friction Diagnostic&trade;</h2>
-        <p>Loading the diagnostic&hellip; if this doesn&rsquo;t move in a few seconds, your browser may be blocking scripts. Enable JavaScript or email <a href="mailto:eugene@atscale-advisors.com">eugene@atscale-advisors.com</a>.</p>
+        <p>Loading the diagnostic&hellip;</p>
+        <p class="muted" style="font-size: 0.92rem;">If this doesn&rsquo;t move in a few seconds, your browser may be blocking JavaScript. Either way, there are two ways forward: email <a href="mailto:eugene@atscale-advisors.com">eugene@atscale-advisors.com</a>, or <a href="https://calendly.com/eugene-atscale-advisors/strategy-discovery">book a free Strategy Discovery call</a> and we&rsquo;ll walk through your business live.</p>
       </div>
+      <noscript>
+        <div class="diag-card" style="margin-top: var(--gap-md); border-color: var(--bronze);">
+          <p><strong>The diagnostic needs JavaScript to run</strong> &mdash; it scores your answers in your browser, privately, with nothing stored on a server.</p>
+          <p>No problem either way. Get the same outcome from a person: <a href="https://calendly.com/eugene-atscale-advisors/strategy-discovery">book a free 30-minute Strategy Discovery call</a>, or email <a href="mailto:eugene@atscale-advisors.com">eugene@atscale-advisors.com</a> and we&rsquo;ll find your Replication Wall together.</p>
+        </div>
+      </noscript>
 
       <p class="muted" style="text-align:center; margin-top: var(--gap-md); font-size: 0.85rem;">
         Your answers are not shared. We&rsquo;ll email your results to the address you provide.

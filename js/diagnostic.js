@@ -624,6 +624,7 @@ function fmtMoney(n) {
 
 function renderResults() {
   const r = computeScore();
+  if (window.atTrack) window.atTrack("diagnostic_complete", { tier: r.tier.name, score: r.src, stage: r.stage.n });
   const wallCallout = r.stage.wallMessage ? `
     <div class="diag-wall-callout">
       This is the Plateau — and you're not failing. You've hit the Replication Wall&trade;: the point where the business has outgrown what one person can hold. It's the single most common place $3M–$30M owner-operators stall, and it's structural, not personal. No amount of working harder gets you across it — that's the barrier we name and price below.
