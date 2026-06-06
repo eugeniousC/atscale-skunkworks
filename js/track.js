@@ -10,8 +10,8 @@
  * then every call is a harmless no-op, so this file is safe to ship as-is.
  */
 (function () {
-  // Paste your Apps Script web-app /exec URL here to switch tracking on:
-  var ENDPOINT = "";
+  // Apps Script web-app /exec URL — first-party events sink (logs to a Google Sheet).
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbyob3wQhdlsJI59gf6-CXmxrunpUuH4HJHTU_rTgaSKjJ9GSWz1Es-coTcYmaxaT2xkfA/exec";
 
   function send(type, data) {
     if (!ENDPOINT) return; // dormant until configured
