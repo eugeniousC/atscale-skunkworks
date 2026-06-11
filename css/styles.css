@@ -502,6 +502,12 @@ th {
   font-size: 0.85rem;
   color: var(--slate);
 }
+/* The [hidden] attribute must win over display:flex so the progress bar is
+   truly hidden on welcome/submitting/results (otherwise the static
+   placeholder label leaks onto the welcome screen as "Step 1 of 19"). */
+.diag-progress[hidden] {
+  display: none;
+}
 .diag-progress-bar {
   flex: 1;
   margin: 0 var(--gap-sm);
